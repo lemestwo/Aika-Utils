@@ -1,0 +1,156 @@
+﻿<Window x:Class="Aika_Packet_Sniffer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Aika_Packet_Sniffer"
+        xmlns:control="clr-namespace:WpfHexaEditor;assembly=WPFHexaEditor"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="800" Width="1100" Background="#FFEAEAEA">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top" Background="#FFFBFBFB" Padding="2">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Open" Click="OpenBtn_OnClick" />
+                <MenuItem Header="_Save" Click="SaveBtn_OnClick" />
+                <MenuItem Header="_Clear" Click="Clear_OnClick" />
+                <MenuItem Header="_Exit" Click="Exit_OnClick" />
+            </MenuItem>
+        </Menu>
+        <StatusBar DockPanel.Dock="Bottom" Margin="3" Height="30">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="700" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+            <StatusBarItem Grid.Column="0">
+                <TextBlock x:Name="SelectionHexLenght" Text="" />
+            </StatusBarItem>
+            <StatusBarItem Grid.Column="1">
+                <TextBlock TextTrimming="CharacterEllipsis" x:Name="SelectionHex" Text="" />
+            </StatusBarItem>
+            <StatusBarItem Grid.Column="3">
+                <ProgressBar x:Name="StatusRunning" Width="90" Height="16" IsIndeterminate="false" />
+            </StatusBarItem>
+        </StatusBar>
+        <Grid Margin="10,4,10,2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="270" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="7*" MinWidth="200" />
+                <ColumnDefinition Width="4" />
+                <ColumnDefinition Width="4*" MinWidth="200" />
+            </Grid.ColumnDefinitions>
+            <GridSplitter Margin="0,0,0,2" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Stretch" />
+            <control:HexEditor x:Name="HexView" Width="Auto" Height="Auto" Grid.Column="0" Grid.Row="1"
+                               Margin="0,5,0,0"
+                               BorderThickness="1" BorderBrush="#FF808080" AllowBuildinCtrlv="False"
+                               AllowBuildinCtrlz="False" AllowDeleteByte="False"
+                               AllowFileDrop="False" ApplicationName="Aika Packet Sniffer"
+                               FileDroppingConfirmation="False" AllowAutoHightLighSelectionByte="False"
+                               AppendNeedConfirmation="False" ByteGrouping="FourByte"
+                               ByteSpacerPositioning="HexBytePanel" ByteSpacerWidthTickness="VerySmall"
+                               StatusBarVisibility="Hidden" ForceCursor="True" HighLightSelectionStart="False"
+                               TblShowMte="False" ReadOnlyMode="True"
+                               SelectionLengthChanged="HexView_OnSelectionLengthChanged" />
+            <ListView x:Name="PacketsListView" Grid.Row="0" Grid.Column="0" SelectionMode="Single"
+                      SelectionChanged="PacketsListView_SelectionChanged" BorderThickness="1" BorderBrush="#FF808080">
+                <ListView.Resources>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Origin}" Value="2">
+                                <Setter Property="Background" Value="#74b9ff" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Origin}" Value="1">
+                                <Setter Property="Background" Value="#b2bec3" />
+                            </DataTrigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="BorderBrush" Value="#262626"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.Resources>
+                <ListView.View>
+                    <GridView AllowsColumnReorder="false">
+                        <GridViewColumn Width="35" Header="#" DisplayMemberBinding="{Binding Index}" />
+                        <GridViewColumn Width="70" Header="Time" DisplayMemberBinding="{Binding Time}" />
+                        <GridViewColumn Width="60" Header="Lenght" DisplayMemberBinding="{Binding Lenght}" />
+                        <GridViewColumn Width="70" Header="Opcode" DisplayMemberBinding="{Binding Opcode}" />
+                        <GridViewColumn Width="280" Header="Name" DisplayMemberBinding="{Binding Name}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <Grid Grid.Row="0" Grid.Column="2" Grid.RowSpan="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="40" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <ListView x:Name="PacketParseListView" Grid.Row="0" Grid.Column="0" SelectionMode="Single"
+                          SelectionChanged="PacketParseListView_SelectionChanged" BorderThickness="1"
+                          BorderBrush="#FF808080" AlternationCount="2">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Style.Triggers>
+                                <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                                    <Setter Property="Background" Value="#F3F3F3" />
+                                </Trigger>
+                                <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                                    <Setter Property="Background" Value="#EDEDED" />
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="BorderBrush" Value="#262626"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.View>
+                        <GridView AllowsColumnReorder="false">
+                            <GridViewColumn Width="55" Header="Type" DisplayMemberBinding="{Binding Type}" />
+                            <GridViewColumn Width="120" Header="Name" DisplayMemberBinding="{Binding Name}" />
+                            <GridViewColumn Width="200" Header="Value" DisplayMemberBinding="{Binding Value}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <Grid Grid.Row="1" Grid.Column="0" Margin="0,5,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="PlayBtn" Grid.Column="0" Margin="0,0,5,0" HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Width="80" Height="35" Padding="5" Click="PlayBtn_OnClick">
+                        <Image Source="Images/play-button.png" />
+                    </Button>
+                    <Button x:Name="StopBtn" Grid.Column="1" Margin="0,0,5,0" HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Width="80" Height="35" Padding="5" Click="StopBtn_OnClick">
+                        <Image Source="Images/stop-button.png" />
+                    </Button>
+                    <Button x:Name="SaveBtn" Grid.Column="2" Margin="0,0,5,0" HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Width="80" Height="35" Padding="5" Click="SaveBtn_OnClick">
+                        <Image Source="Images/save-button.png" />
+                    </Button>
+                    <Button x:Name="OpenBtn" Grid.Column="3" Margin="0" HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Width="80" Height="35" Padding="5" Click="OpenBtn_OnClick">
+                        <Image Source="Images/open-button.png" />
+                    </Button>
+                </Grid>
+            </Grid>
+        </Grid>
+    </DockPanel>
+</Window>

@@ -1,0 +1,9 @@
+.vs/
+.vscode/
+.idea/
+publish/
+Aika Packet Sniffer/obj/
+Aika Packet Sniffer/bin/
+Aika Bin Decrypt/obj/
+Aika Bin Decrypt/bin/
+*.old
