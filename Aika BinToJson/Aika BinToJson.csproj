@@ -44,7 +44,9 @@
   <ItemGroup>
     <Compile Include="Convertion\Base.cs" />
     <Compile Include="Convertion\ItemList.cs" />
+    <Compile Include="Convertion\NpcPos.cs" />
     <Compile Include="Models\ItemsJson.cs" />
+    <Compile Include="Models\NpcPosJson.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

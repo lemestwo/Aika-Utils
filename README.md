@@ -1,8 +1,9 @@
 # Aika Utils
 
-Various tool to make life easier when doing Aika amulator.
+Various tool to make life easier while doing Aika amulator.
 
-## Included
+## Projects
 
-* Aika Bin decrypt
-* Aika packet sniffer
+* Aika BinDecrypt
+* Aika BinToJson
+* Aika Packet Sniffer

@@ -27,6 +27,10 @@ namespace Aika_BinToJson
 
             try
             {
+                // OBS:
+                // It's better to convert using same class model
+                // as the one used in AikaEmu.GameServer.
+
                 var fileName = Path.GetFileName(inFile);
                 if (fileName == null) return;
 
@@ -37,7 +41,7 @@ namespace Aika_BinToJson
                 }
                 else if (fileName.Contains("npcpos"))
                 {
-                    //
+                    convert = new NpcPos(inFile, outFile);
                 }
 
                 if (convert != null)
