@@ -95,7 +95,12 @@ namespace Aika_Packet_Sniffer.Logger
                     var port = reader.ReadUInt16();
                     var size = reader.ReadUInt16();
                     reader.BaseStream.Position -= 2;
-                    _packets.Add(FormatData(reader.ReadBytes(size), origin, port, fromStream ? 0 : i));
+                    var formatData = FormatData(reader.ReadBytes(size), origin, port, fromStream ? 0 : i);
+                    if (formatData != null)
+                    {
+                        _packets.Add(formatData);
+                    }
+
                     i++;
                 }
             }
@@ -111,6 +116,11 @@ namespace Aika_Packet_Sniffer.Logger
                     var size = stream.ReadUInt16();
                     stream.ReadInt32();
                     var opcode = stream.ReadUInt16();
+                    // TODO - Remove later
+                    if (opcode == 0x3006)
+                    {
+                        return null;
+                    }
                     var time = stream.ReadInt32();
                     var template = new PacketListView
                     {

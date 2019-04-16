@@ -43,7 +43,6 @@ namespace Aika_Bin_Decrypt
 
             try
             {
-                var cItemList = false;
                 var binKey = type == 2 ? BinKey2 : BinKey1;
                 using (var stream = new BinaryReader(File.OpenRead(inFile)))
                 {
@@ -61,7 +60,7 @@ namespace Aika_Bin_Decrypt
                     {
                         // Remove client key from file and re-size
                         var fileName = Path.GetFileName(inFile);
-                        cItemList = fileName.Contains("ItemList");
+                        var cItemList = fileName.Contains("ItemList");
                         var cSkillData = fileName.Contains("SkillData");
                         var cActionText = fileName.Contains("ActionText");
                         if (cItemList || cSkillData || cActionText)
@@ -87,57 +86,6 @@ namespace Aika_Bin_Decrypt
 
                     File.WriteAllBytes(outFile, data);
                 }
-
-                if (cItemList)
-                {
-                    using (var stream = new BinaryReader(File.OpenRead(outFile)))
-                    {
-                        var size = stream.BaseStream.Length;
-                        var i = 0u;
-                        var list = new List<ItemModel>();
-                        while (stream.BaseStream.Position < size - 4)
-                        {
-                            var temp = new ItemModel();
-                            temp.LoopId = i;
-                            temp.ItemName = Encoding.UTF8.GetString(stream.ReadBytes(64)).Trim('\u0000');
-                            temp.ItemName2 = Encoding.UTF8.GetString(stream.ReadBytes(64)).Trim('\u0000');
-                            temp.Description = Encoding.UTF8.GetString(stream.ReadBytes(128)).Trim('\u0000');
-                            stream.ReadBytes(2);
-                            temp.ItemSlot = stream.ReadUInt16();
-                            var caelium = stream.ReadInt32();
-                            stream.ReadBytes(20);
-                            temp.HonorCost = stream.ReadUInt32();
-                            temp.MedalCost = stream.ReadUInt32();
-                            temp.BuyPrice = stream.ReadUInt32();
-                            temp.SellPrice = stream.ReadUInt32();
-                            temp.Profession = stream.ReadUInt16();
-                            stream.ReadUInt16();
-                            var unk = stream.ReadUInt16();
-                            stream.ReadInt32();
-                            stream.ReadUInt16();
-                            var unk2 = stream.ReadUInt16();
-                            stream.ReadInt32();
-                            stream.ReadUInt16();
-                            temp.ImageId = stream.ReadUInt16();
-                            var unk3 = stream.ReadUInt16();
-                            stream.ReadBytes(6);
-                            temp.MinLevel = stream.ReadUInt16();
-                            var unk4 = stream.ReadInt32();
-                            temp.TimeLimit = stream.ReadInt32();
-                            stream.ReadBytes(18);
-                            temp.PAtk = stream.ReadUInt16();
-                            temp.PDef = stream.ReadUInt16();
-                            temp.MAtk = stream.ReadUInt16();
-                            temp.MDef = stream.ReadUInt16();
-                            stream.ReadBytes(98);
-                            i++;
-                            list.Add(temp);
-                        }
-
-                        var json = JsonConvert.SerializeObject(list);
-                        File.WriteAllText(inFile + ".json", json);
-                    }
-                }
             }
             catch (Exception e)
             {
@@ -153,27 +101,6 @@ namespace Aika_Bin_Decrypt
             }
 
             Console.Read();
-        }
-
-        public class ItemModel
-        {
-            public uint LoopId { get; set; }
-            public string ItemName { get; set; }
-            public string ItemName2 { get; set; }
-            public string Description { get; set; }
-            public ushort ItemSlot { get; set; }
-            public uint HonorCost { get; set; }
-            public uint MedalCost { get; set; }
-            public uint BuyPrice { get; set; }
-            public uint SellPrice { get; set; }
-            public ushort Profession { get; set; }
-            public ushort ImageId { get; set; }
-            public ushort MinLevel { get; set; }
-            public int TimeLimit { get; set; }
-            public ushort PAtk { get; set; }
-            public ushort PDef { get; set; }
-            public ushort MAtk { get; set; }
-            public ushort MDef { get; set; }
         }
 
         private static readonly byte[] BinKey1 =

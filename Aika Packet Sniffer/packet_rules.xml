@@ -64,6 +64,12 @@
                 <param type="ushort" name="tokenStage"/>
                 <param type="uint" name="accId"/>
             </packet>
+            <packet opcode="0x340f" name="MoveItem">
+                <param type="ushort" name="slotTypeTo"/>
+                <param type="ushort" name="slotTo"/>
+                <param type="ushort" name="slotTypeFrom"/>
+                <param type="ushort" name="slotFrom"/>
+            </packet>
         </client>
         <server>
             <header>
