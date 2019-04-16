@@ -24,7 +24,9 @@ namespace Aika_Bin_Decrypt
             Console.WriteLine("1 - ItemList, PI or SetItem.");
             Console.WriteLine("2 - Others.");
             Console.WriteLine("3 - SL.bin");
-            Console.WriteLine("Type 1-3 then press ENTER...");
+            Console.WriteLine("4 - MN.bin");
+            Console.WriteLine("5 - Curse.bin");
+            Console.WriteLine("Type 1-5 then press ENTER...");
             var isInt = int.TryParse(Console.ReadLine(), out var type);
 
             if (!isInt)
@@ -48,39 +50,65 @@ namespace Aika_Bin_Decrypt
                 {
                     var size = (int) stream.BaseStream.Length;
                     var data = stream.ReadBytes(size);
-                    if (type == 3)
+                    switch (type)
                     {
-                        // SL.bin
-                        for (var i = 0; i < size; i++)
+                        case 3:
                         {
-                            data[i] += (byte) (5 * (i / 5) - i);
-                        }
-                    }
-                    else
-                    {
-                        // Remove client key from file and re-size
-                        var fileName = Path.GetFileName(inFile);
-                        var cItemList = fileName.Contains("ItemList");
-                        var cSkillData = fileName.Contains("SkillData");
-                        var cActionText = fileName.Contains("ActionText");
-                        if (cItemList || cSkillData || cActionText)
-                        {
-                            if (data[0] == 0x42 && data[1] == 0x52 || cActionText)
+                            // SL.bin
+                            for (var i = 0; i < size; i++)
                             {
-                                var sizeToDelete = cActionText ? 48 : 12;
-                                var newData = new byte[size - sizeToDelete];
-                                Buffer.BlockCopy(data, sizeToDelete, newData, 0, size - sizeToDelete);
+                                data[i] += (byte) (5 * (i / 5) - i);
+                            }
 
-                                // Set new data
-                                size = newData.Length;
-                                data = newData;
+                            break;
+                        }
+                        case 4:
+                        {
+                            // MN.bin
+                            for (var i = 0; i < (size | size << 16); i++)
+                            {
+                                data[i] -= (byte) (i);
                             }
                         }
-
-                        var keySize = binKey.Length;
-                        for (var i = 0; i < size; i++)
+                            break;
+                        case 5:
                         {
-                            data[i] -= (byte) (i + binKey[i % keySize]);
+                            // Curse.bin
+                            for (var i = 0; i < size; i++)
+                            {
+                                data[i] = (byte) ~data[i];
+                            }
+                        }
+                            break;
+                        default:
+                        {
+                            // Remove client key from file and re-size data
+                            var fileName = Path.GetFileName(inFile);
+                            var cItemList = fileName.Contains("ItemList");
+                            var cSkillData = fileName.Contains("SkillData");
+                            var cActionText = fileName.Contains("ActionText");
+                            if (cItemList || cSkillData || cActionText)
+                            {
+                                // BRClient key
+                                if (data[0] == 0x42 && data[1] == 0x52 || cActionText)
+                                {
+                                    var sizeToDelete = cActionText ? 48 : 12;
+                                    var newData = new byte[size - sizeToDelete];
+                                    Buffer.BlockCopy(data, sizeToDelete, newData, 0, size - sizeToDelete);
+
+                                    // Set new data
+                                    size = newData.Length;
+                                    data = newData;
+                                }
+                            }
+
+                            var keySize = binKey.Length;
+                            for (var i = 0; i < size; i++)
+                            {
+                                data[i] -= (byte) (i + binKey[i % keySize]);
+                            }
+
+                            break;
                         }
                     }
 

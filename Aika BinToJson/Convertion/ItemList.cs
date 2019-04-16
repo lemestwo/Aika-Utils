@@ -14,7 +14,7 @@ namespace Aika_BinToJson.Convertion
 
         public override void Convert()
         {
-            using (var stream = new BinaryReader(File.OpenRead(Path)))
+            using (var stream = new BinaryReader(File.OpenRead(Path), Encode))
             {
                 var size = stream.BaseStream.Length;
                 ushort i = 0;
@@ -24,9 +24,9 @@ namespace Aika_BinToJson.Convertion
                 {
                     var temp = new ItemsJson();
                     temp.LoopId = i;
-                    temp.ItemName = Encoding.UTF8.GetString(stream.ReadBytes(64)).Trim('\u0000');
-                    temp.ItemName2 = Encoding.UTF8.GetString(stream.ReadBytes(64)).Trim('\u0000');
-                    temp.Description = Encoding.UTF8.GetString(stream.ReadBytes(128)).Trim('\u0000');
+                    temp.ItemName = Encode.GetString(stream.ReadBytes(64)).Trim('\u0000');
+                    temp.ItemName2 = Encode.GetString(stream.ReadBytes(64)).Trim('\u0000');
+                    temp.Description = Encode.GetString(stream.ReadBytes(128)).Trim('\u0000');
                     temp.IsLootBox = stream.ReadUInt16() == 1;
                     temp.ItemSlot = stream.ReadUInt16();
                     temp.CaeliumId = stream.ReadUInt32();

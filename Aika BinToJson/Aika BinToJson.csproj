@@ -43,10 +43,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Convertion\Base.cs" />
+    <Compile Include="Convertion\ExpList.cs" />
     <Compile Include="Convertion\ItemList.cs" />
+    <Compile Include="Convertion\Mn.cs" />
+    <Compile Include="Convertion\MobPos.cs" />
     <Compile Include="Convertion\NpcPos.cs" />
+    <Compile Include="Convertion\PranExpList.cs" />
+    <Compile Include="Models\ExpListJson.cs" />
     <Compile Include="Models\ItemsJson.cs" />
+    <Compile Include="Models\MnJson.cs" />
+    <Compile Include="Models\MobPosJson.cs" />
     <Compile Include="Models\NpcPosJson.cs" />
+    <Compile Include="Models\PranExpListJson.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

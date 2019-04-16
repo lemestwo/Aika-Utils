@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Aika_BinToJson.Convertion;
+using Aika_BinToJson.Models;
 
 namespace Aika_BinToJson
 {
@@ -25,6 +26,7 @@ namespace Aika_BinToJson
                 return;
             }
 
+            var isDone = false;
             try
             {
                 // OBS:
@@ -43,23 +45,51 @@ namespace Aika_BinToJson
                 {
                     convert = new NpcPos(inFile, outFile);
                 }
+                else if (fileName.Contains("MobPos"))
+                {
+                    convert = new MobPos(inFile, outFile);
+                }
+                else if (fileName.Contains("ExpList"))
+                {
+                    if (fileName.Contains("Pran"))
+                    {
+                        convert = new PranExpList(inFile, outFile);
+                    }
+                    else
+                    {
+                        convert = new ExpList(inFile, outFile);
+                    }
+                }
+                else if (fileName.Contains("MN"))
+                {
+                    convert = new Mn(inFile, outFile);
+                }
 
                 if (convert != null)
                 {
                     convert.Convert();
                     convert.Save();
+                    isDone = true;
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                Console.Read();
                 throw;
             }
             finally
             {
-                Console.WriteLine("Input: " + Path.GetFileName(inFile));
-                Console.WriteLine("Output: " + Path.GetFileName(outFile));
-                Console.WriteLine("Converted with success.");
+                if (isDone)
+                {
+                    Console.WriteLine("Input: " + Path.GetFileName(inFile));
+                    Console.WriteLine("Output: " + Path.GetFileName(outFile));
+                    Console.WriteLine("Converted with success.");
+                }
+                else
+                {
+                    Console.WriteLine("Error in conversion.");
+                }
             }
 
             Console.Read();
