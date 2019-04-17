@@ -26,7 +26,8 @@ namespace Aika_Bin_Decrypt
             Console.WriteLine("3 - SL.bin");
             Console.WriteLine("4 - MN.bin");
             Console.WriteLine("5 - Curse.bin");
-            Console.WriteLine("Type 1-5 then press ENTER...");
+            Console.WriteLine("6 - CData.bin");
+            Console.WriteLine("Type 1-6 then press ENTER...");
             var isInt = int.TryParse(Console.ReadLine(), out var type);
 
             if (!isInt)
@@ -78,6 +79,39 @@ namespace Aika_Bin_Decrypt
                             {
                                 data[i] = (byte) ~data[i];
                             }
+                        }
+                            break;
+                        case 6:
+                        {
+                            // CData.bin
+                            var dataList = new List<byte[]>();
+                            for (var i = 0; i < 4; i++)
+                            {
+                                var temp = new byte[6404];
+                                Buffer.BlockCopy(data, 6404 * i, temp, 0, 6404);
+                                Array.Resize(ref temp, 6400);
+                                dataList.Add(temp);
+                            }
+
+                            var keySize = BinKey3.Length;
+                            var j = 0;
+                            while (j < 6400)
+                            {
+                                var a1 = j * BinKey3[j % keySize];
+                                var a2 = dataList[1][j] - a1;
+                                dataList[0][j] -= (byte) a1;
+                                var a3 = dataList[2][j];
+                                dataList[1][j] = (byte) a2;
+                                var a4 = dataList[3][j] - a1;
+                                dataList[2][j] = (byte) (a3 - a1);
+                                dataList[3][j++] = (byte) a4;
+                            }
+
+                            data = new byte[6400 * 4];
+                            Buffer.BlockCopy(dataList[0], 0, data, 0, 6400);
+                            Buffer.BlockCopy(dataList[1], 0, data, 6400, 6400);
+                            Buffer.BlockCopy(dataList[2], 0, data, 6400 * 2, 6400);
+                            Buffer.BlockCopy(dataList[3], 0, data, 6400 * 3, 6400);
                         }
                             break;
                         default:
@@ -155,6 +189,17 @@ namespace Aika_Bin_Decrypt
             0xCE, 0x20, 0xBB, 0xE7, 0xBC, 0xBC, 0xBF, 0xE4, 0x2E, 0x20, 0xBE, 0xC6,
             0xBC, 0xCC, 0xC1, 0xD2, 0x3F, 0x20, 0xC1, 0xC1, 0xC0, 0xBA, 0xBC, 0xBC,
             0xBB, 0xF3, 0xB8, 0xB8, 0xB5, 0xEC, 0xBD, 0xC3, 0xB4, 0xD9, 0x2E
+        };
+
+        private static readonly byte[] BinKey3 =
+        {
+            0xBF, 0xEC, 0xB8, 0xAE, 0xB8, 0xF0, 0xB5, 0xCE, 0x20, 0xB3, 0xEB, 0xB7,
+            0xC2, 0xC7, 0xD8, 0xBC, 0xAD, 0x20, 0xC1, 0xC1, 0xC0, 0xBA, 0x20, 0xBB,
+            0xE7, 0xC8, 0xB8, 0xB8, 0xA6, 0x20, 0xB8, 0xB8, 0xB5, 0xE9, 0xB0, 0xED,
+            0x20, 0xBA, 0xCE, 0xC0, 0xDA, 0xB5, 0xC7, 0xC0, 0xDA, 0xB0, 0xED, 0xBF,
+            0xEB, 0x20, 0xB1, 0xD7, 0xB7, 0xB2, 0xB7, 0xC1, 0xB8, 0xE9, 0x20, 0xC3,
+            0xBD, 0xBC, 0xB6, 0x20, 0xC7, 0xAE, 0xB8, 0xE9, 0x20, 0xBE, 0xC8, 0xB5,
+            0xC7, 0xBF, 0xEB
         };
     }
 }
