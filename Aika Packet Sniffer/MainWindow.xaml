@@ -41,16 +41,26 @@
         </StatusBar>
         <Grid Margin="10,4,10,2">
             <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="270" />
+                <RowDefinition Height="250" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="7*" MinWidth="200" />
                 <ColumnDefinition Width="4" />
                 <ColumnDefinition Width="4*" MinWidth="200" />
             </Grid.ColumnDefinitions>
-            <GridSplitter Margin="0,0,0,2" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Stretch" />
-            <control:HexEditor x:Name="HexView" Width="Auto" Height="Auto" Grid.Column="0" Grid.Row="1"
+            <Border Grid.Column="0" Grid.Row="0" BorderThickness="1" BorderBrush="#FF808080" Margin="0,0,0,5"
+                    Background="WhiteSmoke">
+                <StackPanel Orientation="Horizontal">
+                    <Label Margin="4">Opcode:</Label>
+                    <TextBox x:Name="SearchBox" Margin="4" Width="100" Padding="4" />
+                    <Button Margin="4" Padding="10,0,10,0" Content="Search!" IsDefault="True" Click="SearchButton_Click" />
+                    <Button Margin="4" Padding="10,0,10,0" Content="Clear" Click="ClearButton_OnClick" />
+                </StackPanel>
+            </Border>
+            <GridSplitter Margin="0,0,0,2" Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" HorizontalAlignment="Stretch" />
+            <control:HexEditor x:Name="HexView" Width="Auto" Height="Auto" Grid.Column="0" Grid.Row="2"
                                Margin="0,5,0,0"
                                BorderThickness="1" BorderBrush="#FF808080" AllowBuildinCtrlv="False"
                                AllowBuildinCtrlz="False" AllowDeleteByte="False"
@@ -61,7 +71,7 @@
                                StatusBarVisibility="Hidden" ForceCursor="True" HighLightSelectionStart="False"
                                TblShowMte="False" ReadOnlyMode="True"
                                SelectionLengthChanged="HexView_OnSelectionLengthChanged" />
-            <ListView x:Name="PacketsListView" Grid.Row="0" Grid.Column="0" SelectionMode="Single"
+            <ListView x:Name="PacketsListView" Grid.Row="1" Grid.Column="0" SelectionMode="Single"
                       SelectionChanged="PacketsListView_SelectionChanged" BorderThickness="1" BorderBrush="#FF808080">
                 <ListView.Resources>
                     <Style TargetType="{x:Type ListViewItem}">
@@ -73,7 +83,7 @@
                                 <Setter Property="Background" Value="#b2bec3" />
                             </DataTrigger>
                             <Trigger Property="IsSelected" Value="True">
-                                <Setter Property="BorderBrush" Value="#262626"/>
+                                <Setter Property="BorderBrush" Value="#262626" />
                             </Trigger>
                         </Style.Triggers>
                     </Style>
@@ -88,7 +98,7 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <Grid Grid.Row="0" Grid.Column="2" Grid.RowSpan="2">
+            <Grid Grid.Row="0" Grid.Column="2" Grid.RowSpan="3">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="40" />
@@ -109,7 +119,7 @@
                                     <Setter Property="Background" Value="#EDEDED" />
                                 </Trigger>
                                 <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="BorderBrush" Value="#262626"/>
+                                    <Setter Property="BorderBrush" Value="#262626" />
                                 </Trigger>
                             </Style.Triggers>
                         </Style>

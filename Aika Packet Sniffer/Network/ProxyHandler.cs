@@ -18,7 +18,6 @@ namespace Aika_Packet_Sniffer.Network
         private int _connectionId;
         private readonly LogWrite _logWriter;
         private ushort _port;
-        private uint _packetCount;
 
         public ProxyHandler(Socket socket, int conId, Action<List<ListViewModel>> onFinish)
         {
@@ -26,7 +25,6 @@ namespace Aika_Packet_Sniffer.Network
             _connectionId = conId;
             _recvThread = new Thread(RecvThread);
             _logWriter = new LogWrite(onFinish);
-            _packetCount = 0;
         }
 
         private void RecvThread()
@@ -39,7 +37,7 @@ namespace Aika_Packet_Sniffer.Network
                     return;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Shutdown();
                 return;
@@ -60,7 +58,7 @@ namespace Aika_Packet_Sniffer.Network
                 tcpClient.Connect(new IPAddress(ip), port);
                 _port = port;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 _recvSocket.Send(new byte[] {0, 91, 0, 0, 0, 0, 0, 0});
                 Shutdown();

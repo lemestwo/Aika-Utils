@@ -31,8 +31,7 @@ namespace Aika_BinToJson.Convertion
                     temp.ItemSlot = stream.ReadUInt16();
                     temp.CaeliumId = stream.ReadUInt32();
                     temp.Unk1 = stream.ReadInt32();
-                    temp.Unk2 = stream.ReadByte();
-                    temp.Unk3 = stream.ReadByte();
+                    temp.BuffId = stream.ReadUInt16(); 
                     temp.Unk4 = stream.ReadByte(); // gold related
                     temp.Unk5 = stream.ReadByte(); // gold related
                     temp.Unk6 = stream.ReadUInt32(); // buff related

@@ -10,7 +10,7 @@
                 <param type="ushort" name="hOpcode"/>
                 <param type="int" name="hTime"/>
             </header>
-            
+
             <packet opcode="0x2403" name="RequestDeleteChar">
                 <param type="uint" name="accId"/>
                 <param type="uint" name="slot"/>
@@ -38,6 +38,9 @@
                 <param type="bytes" size="12" name="emptyBytes"/>
                 <param type="int" name="isStartRanch"/>
             </packet>
+            <packet opcode="0x3005" name="RotationUnit">
+                <param type="int" name="rotation"/>
+            </packet>
             <packet opcode="0x300f" name="RequestNpcChat">
                 <param type="int" name="npcId"/>
                 <param type="int" name="chatOption"/>
@@ -57,6 +60,13 @@
                 <param type="ushort" name="tokenStage"/>
                 <param type="string" size="4" name="token1"/>
                 <param type="string" size="4" name="token2"/>
+            </packet>
+            <packet opcode="0x3c86" name="SendChatMessage">
+                <param type="int" name="unk"/>
+                <param type="int" name="unk"/>
+                <param type="int" name="chatType"/>
+                <param type="string" size="16" name="charName"/>
+                <param type="string" size="128" name="msg"/>
             </packet>
             <packet opcode="0x3f33" name="RequestDeleteCharToken">
                 <param type="int" name="step?"/>
@@ -85,10 +95,10 @@
             <packet opcode="0x1031" name="UnkInitial3"/>
             <packet opcode="0x30A5" name="UnkInitial4"/>
             <packet opcode="0x30A6" name="UnkInitial2"/>
-            
-            <packet opcode="0x1001" name="RemoveFromWorld">
+
+            <packet opcode="0x1001" name="DespawnUnit">
                 <param type="int" name="id"/>
-                <param type="int" name="unkInt"/>
+                <param type="int" name="isNormal"/>
             </packet>
             <packet opcode="0x1003" name="UpdateHealthMana">
                 <param type="int" name="curHp"/>
@@ -104,7 +114,7 @@
                     <param type="ushort" name="itemId"/>
                 </loop>
             </packet>
-            <packet opcode="0x1008" name="UpdateLevel">
+            <packet opcode="0x1008" name="UpdateExperience">
                 <param type="ushort" name="level"/>
                 <param type="bytes" size="2" name="unkCC"/>
                 <param type="ulong" name="experience"/>
@@ -150,6 +160,9 @@
             </packet>
             <packet opcode="0x1010" name="ResetNpcChatOptions">
             </packet>
+            <packet opcode="0x1011" name="StartNpcTalk">
+                <param type="uint" name="chatId?"/>
+            </packet>
             <packet opcode="0x1012" name="SendNpcOption">
                 <param type="int" name="optionId"/>
                 <param type="int" name="unInt"/>
@@ -157,9 +170,30 @@
                 <param type="int" name="unInt"/>
                 <param type="int" name="FFInt"/>
             </packet>
+            <packet opcode="0x1015" name="PlaySound">
+                <param type="int" name="soundId"/>
+                <param type="int" name="soundType"/>
+            </packet>
+            <packet opcode="0x1016" name="UpdatePranExperience">
+                <param type="int" name="level"/>
+                <param type="int" name="xp"/>
+                <param type="bytes" size="20"/>
+            </packet>
             <packet opcode="0x1017" name="PranEffect">
                 <param type="int" name="targetId"/>
                 <param type="int" name="effectId"/>
+            </packet>
+            <packet opcode="0x101b" name="SendXpGoldAnimation">
+                <param type="int" name="xp"/>
+                <param type="int" name="gold"/>
+            </packet>
+            <packet opcode="0x1030" name="UpdateNationGuild">
+                <param type="int" name="citizenId"/>
+                <param type="short" name="nationId"/>
+                <param type="short" name="guildLogoIndex"/>
+                <param type="int" name="guildid?"/>
+                <param type="int" name="guildid?"/>
+                <param type="bytes" size="16"/>
             </packet>
             <packet opcode="0x1038" name="UpdatePremiumStash">
             </packet>
@@ -168,7 +202,24 @@
             </packet>
             <packet opcode="0x104f" name="UpdateAccountLevel">
                 <param type="int" name="level"/>
-            </packet>            
+            </packet>
+            <packet opcode="0x106f" name="ApplyBuff">
+                <param type="ushort" name="id"/>
+                <param type="ushort" name="unk"/>
+                <param type="int" name="unkInfo"/>
+                <param type="int" name="unk"/>
+            </packet>
+            <packet opcode="0x107d" name="UpdateTitleList">
+                <param type="int" name="acquiredTitleId"/>
+                <param type="int" name="updatedTitleId"/>
+            </packet>
+            <packet opcode="0x1036" name="UpdateReliques">
+                <loop count="24">
+                    <param type="ushort" name="itemId"/>
+                </loop>
+                <param type="ushort" name="unk"/>
+                <param type="ushort" name="unk"/>
+            </packet>
             <packet opcode="0x1801" name="SendCharacterList">
                 <param type="int" name="accId"/>
                 <param type="int" name="accLevel?"/>
@@ -206,6 +257,97 @@
                     <param type="byte" name="hasToken"/>
                     <param type="bytes" size="6" name="emptyCC"/>
                 </loop>
+            </packet>
+            <packet opcode="0x1807" name="SendPranToWorld">
+                <param type="string" size="16" name="name"/>
+                <param type="byte" name="unk"/>
+                <param type="byte" name="unk"/>
+                <param type="ushort" name="unk"/>
+                <param type="int" name="unk"/>
+                <param type="int" name="hp"/>
+                <param type="int" name="maxHp"/>
+                <param type="int" name="mp"/>
+                <param type="int" name="maxMp"/>
+                <param type="int" name="Exp"/>
+                <param type="short" name="pDef"/>
+                <param type="short" name="mDef"/>
+                <param type="bytes" size="8" name="m128i"/>
+                <param type="int" name="unk"/>
+                <param type="int" name="unk"/>
+
+                <loop count="16">
+                    <param type="ushort" name="Id"/>
+                    <param type="ushort" name="unkShort"/>
+                    <param type="int" name="unkInt"/>
+                    <param type="byte" name="effect1"/>
+                    <param type="byte" name="effect2"/>
+                    <param type="byte" name="effect3"/>
+                    <param type="byte" name="effect1-1"/>
+                    <param type="byte" name="effect2-1"/>
+                    <param type="byte" name="effect3-1"/>
+                    <param type="byte" name="durMin"/>
+                    <param type="byte" name="durMax"/>
+                    <param type="byte" name="ref"/>
+                    <param type="byte" name="unkByte"/>
+                    <param type="ushort" name="time"/>
+                </loop>
+
+                <loop count="42">
+                    <param type="ushort" name="Id"/>
+                    <param type="ushort" name="unkShort"/>
+                    <param type="int" name="unkInt"/>
+                    <param type="byte" name="effect1"/>
+                    <param type="byte" name="effect2"/>
+                    <param type="byte" name="effect3"/>
+                    <param type="byte" name="effect1-1"/>
+                    <param type="byte" name="effect2-1"/>
+                    <param type="byte" name="effect3-1"/>
+                    <param type="byte" name="durMin"/>
+                    <param type="byte" name="durMax"/>
+                    <param type="byte" name="ref"/>
+                    <param type="byte" name="unkByte"/>
+                    <param type="ushort" name="time"/>
+                </loop>
+
+                <param type="short" name="unk"/>
+                <param type="short" name="unk"/>
+
+                <param type="int" name="unk"/>
+                <param type="int" name="unk"/>
+                <param type="int" name="unk"/>
+                <param type="int" name="unk"/>
+                <param type="int" name="unk"/>
+                <param type="int" name="unk"/>
+                <param type="int" name="unk"/>
+                <param type="int" name="unk"/>
+                <param type="int" name="unk"/>
+                <param type="int" name="unk"/>
+            </packet>
+            <packet opcode="0x181a" name="UpdateSiegeInfo">
+                <param type="string" size="20" name="defense"/>
+                <param type="string" size="20" name="defense"/>
+                <param type="string" size="20" name="defense"/>
+                <param type="string" size="20" name="defense"/>
+
+                <param type="string" size="20" name="attack1"/>
+                <param type="string" size="20" name="attack1"/>
+                <param type="string" size="20" name="attack1"/>
+                <param type="string" size="20" name="attack1"/>
+
+                <param type="string" size="20" name="attack2"/>
+                <param type="string" size="20" name="attack2"/>
+                <param type="string" size="20" name="attack2"/>
+                <param type="string" size="20" name="attack2"/>
+
+                <param type="string" size="20" name="attack3"/>
+                <param type="string" size="20" name="attack3"/>
+                <param type="string" size="20" name="attack3"/>
+                <param type="string" size="20" name="attack3"/>
+
+                <param type="string" size="20" name="attack4"/>
+                <param type="string" size="20" name="attack4"/>
+                <param type="string" size="20" name="attack4"/>
+                <param type="string" size="20" name="attack4"/>
             </packet>
             <packet opcode="0x1825" name="SendToWorld">
                 <param type="int" name="accId"/>
@@ -327,6 +469,28 @@
                 <param type="string" size="16" name="pran2"/>
                 <param type="long" name="unkLong"/>
             </packet>
+            <packet opcode="0x1836" name="UpdateNationGovernment">
+                <param type="string" size="20" name="guildName"/>
+                <param type="string" size="20" name="guildName"/>
+                <param type="string" size="20" name="guildName"/>
+                <param type="string" size="20" name="guildName"/>
+                <param type="int" name="unk (short)"/>
+                <param type="int" name="unk"/>
+                <param type="int" name="nationId? (short)"/>
+                <param type="ulong" name="settlement"/>
+                <param type="byte" name="unkByte"/>
+                <param type="byte" name="citizen"/>
+                <param type="byte" name="visitor"/>
+                <param type="byte" name="unkAlways0"/>
+                <param type="int" name="unk"/>
+                <param type="int" name="unk"/>
+                <param type="byte" name="unkByte"/>
+                <param type="bytes" size="27"/>
+                <param type="byte" name="rankPosition"/>
+                <param type="short" name="stabTime (byte)"/>
+                <param type="byte" name="unkByte"/>
+                <param type="int" name="unk"/>
+            </packet>
             <packet opcode="0x184c" name="DungeonTimer?">
             </packet>
             <packet opcode="0x1884" name="SendMessage">
@@ -336,10 +500,23 @@
                 <param type="byte" name="unkByte"/>
                 <param type="string" size="128" name="text"/>
             </packet>
-            <packet opcode="0x3031" name="UnkQuestPacket">
+            <packet opcode="0x2027" name="InitialUnk202">
+                <param type="ushort" name="unk"/>
+                <param type="ushort" name="unk"/>
+                <param type="ushort" name="unk"/>
+                <param type="byte" name="unk"/>
+                <param type="bytes" size="5"/>
+                <param type="int" name="unk"/>
+            </packet>
+            <packet opcode="0x3012" name="UpdateCharGold">
+                <param type="bytes" size="4"/>
+                <param type="ulong" name="invGold"/>
+                <param type="ulong" name="bankGold"/>
+            </packet>
+            <packet opcode="0x3031" name="SendQuestInfo">
                 <param type="ushort" name="questId"/>
             </packet>
-            <packet opcode="0x3049" name="UnitSpawn">
+            <packet opcode="0x3049" name="SendUnitSpawn">
                 <param type="string" size="16" name="characterName"/>
                 <param type="ushort" name="charHair"/>
                 <param type="ushort" name="charFace"/>
@@ -362,38 +539,53 @@
                 <param type="byte" name="charWidth"/>
                 <param type="byte" name="charChest"/>
                 <param type="byte" name="charLeg"/>
-                <param type="byte" name="charBody"/>
                 <param type="ushort" name="unkShort"/>
                 <param type="ushort" name="unkShort"/>
                 <param type="ushort" name="unkShort"/>
-                <param type="bytes" size="60" name="buffs?"/>
+                <param type="bytes" size="120" name="buffs"/>
                 <param type="bytes" size="240" name="unk"/>
                 <param type="string" size="32" name="title"/>
-                <param type="bytes" size="20" name="unk"/>
+
+                <param type="int" name="unk"/>
+                <param type="ushort" name="unk"/>
+                <param type="ushort" name="unk"/>
+                <param type="ushort" name="unk"/>
+                <param type="ushort" name="unk"/>
+                <param type="int" name="unk"/>
+                <param type="int" name="unk"/>
             </packet>
-            <packet opcode="0x305e" name="MobSpawn">
+            <packet opcode="0x305e" name="SendMobSpawn">
                 <param type="uint" name="mobId"/>
                 <param type="long" name="unkLong"/>
                 <param type="int" name="unkInt"/>
                 <param type="float" name="coordX"/>
                 <param type="float" name="coordY"/>
-                <param type="int" name="unkInt"/>
+                <param type="short" name="rotation"/>
+                <param type="short" name="unkShort"/>
                 <param type="int" name="hp"/>
                 <param type="int" name="hp"/>
                 <param type="int" name="hp"/>
                 <param type="int" name="unkInt"/>
                 <param type="byte" name="unkByte"/>
-                <param type="int" name="unkInt"/>
-                <param type="int" name="unkInt"/>
-                <param type="int" name="unkInt"/>
+                <param type="byte" name="unkByte"/>
+                <param type="byte" name="unkByte"/>
+                <param type="byte" name="unkByte"/>
+                <param type="ushort" name="empty"/>
+                <param type="ushort" name="unkShort"/>
+                <param type="byte" name="unkByte"/>
+                <param type="byte" name="unkByte"/>
+                <param type="byte" name="unkByte"/>
+                <param type="byte" name="unkByte"/>
+                <param type="byte" name="unkByte"/>
                 <param type="byte" name="width"/>
                 <param type="byte" name="chest"/>
                 <param type="byte" name="leg"/>
-                <param type="byte" name="body"/>
-                <param type="short" name="unkShort"/>
+                <param type="byte" name="empty"/>
                 <param type="byte" name="unkByte"/>
-                <param type="int" name="unkInt"/>
-                <param type="int" name="unkInt"/>
+                <param type="byte" name="unkByte"/>
+                <param type="byte" name="unkByte"/>
+                <param type="uint" name="mobId"/>
+                <param type="uint" name="unkUInt"/>
             </packet>
             <packet opcode="0x309d" name="SendTokenResult">
                 <param type="ushort" name="result"/>
@@ -407,7 +599,7 @@
                 <param type="byte" name="moveSpeed?"/>
                 <param type="int" name="unkInt"/>
             </packet>
-            <packet opcode="0x30c2" name="XignCode Shit" />
+            <packet opcode="0x30c2" name="XignCode Shit"/>
             <packet opcode="0x3c86" name="SendChatMsg">
                 <param type="bytes" size="8" name="emptyByte"/>
                 <param type="int" name="chatType"/>
@@ -432,7 +624,7 @@
                 <param type="byte" name="ref"/>
                 <param type="byte" name="unkByte"/>
                 <param type="ushort" name="time"/>
-            </packet>   
+            </packet>
             <packet opcode="0x3f33" name="ResponseDeleteCharToken">
                 <param type="int" name="step?"/>
                 <param type="int" name="unkInt"/>

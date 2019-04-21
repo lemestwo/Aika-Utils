@@ -191,7 +191,7 @@ namespace Aika_Packet_Sniffer.Logger.Xml
             return param;
         }
 
-        private static long ParseLong(string v)
+        public static long ParseLong(string v)
         {
             return v.IndexOf('x') == -1 ? long.Parse(v) : long.Parse(v.Substring(2), NumberStyles.HexNumber);
         }
