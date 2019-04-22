@@ -11,6 +11,8 @@
                 <param type="int" name="hTime"/>
             </header>
 
+            <packet opcode="0x200a" name="RequestUpdateCash">
+            </packet>
             <packet opcode="0x2403" name="RequestDeleteChar">
                 <param type="uint" name="accId"/>
                 <param type="uint" name="slot"/>
@@ -80,6 +82,9 @@
                 <param type="ushort" name="slotTypeFrom"/>
                 <param type="ushort" name="slotFrom"/>
             </packet>
+            <packet opcode="0x3f34" name="PuzzleEventRequest">
+                <param type="int" name="actionId"/>
+            </packet>
         </client>
         <server>
             <header>
@@ -145,7 +150,8 @@
                 <param type="ushort" name="unknown"/>
                 <param type="ushort" name="unknown"/>
                 <param type="ushort" name="critChance"/>
-                <param type="ushort" name="dodgeChance"/>
+                <param type="byte" name="dodgeChance"/>
+                <param type="byte" name="hitChance"/>
                 <param type="ushort" name="doubleAttackChance"/>
                 <param type="ushort" name="resist"/>
             </packet>
@@ -187,6 +193,33 @@
                 <param type="int" name="xp"/>
                 <param type="int" name="gold"/>
             </packet>
+            <packet opcode="0x101f" name="Unk101F">
+                <param type="short" name="unk"/>
+                <param type="short" name="unk"/>
+                <param type="int" name="notUsed"/>
+            </packet>
+            <packet opcode="0x102c" name="Unk102C">
+            </packet>
+            <packet opcode="0x102b" name="UpdateEquipDur">
+                <loop count="16">
+                    <param type="byte" name="durability"/>
+                </loop>
+            </packet>
+            <packet opcode="0x1027" name="Unk1027">
+                <param type="short" name="unk"/>
+                <param type="short" name="unk"/>
+                <param type="int" name="unk"/>
+            </packet>
+            <packet opcode="0x1028" name="CurNationInfo">
+                <param type="byte" name="placement"/>
+                <param type="byte" name="taxCitizen"/>
+                <param type="byte" name="taxVisitor"/>
+                <param type="byte" name="unk"/>
+                <param type="int" name="unk"/>
+                <param type="int" name="unk"/>
+                <param type="uint" name="unkByte"/>
+                <param type="int" name="emptyFill"/>
+            </packet>
             <packet opcode="0x1030" name="UpdateNationGuild">
                 <param type="int" name="citizenId"/>
                 <param type="short" name="nationId"/>
@@ -197,17 +230,31 @@
             </packet>
             <packet opcode="0x1038" name="UpdatePremiumStash">
             </packet>
-            <packet opcode="0x1039" name="XTrap">
-                <param type="int" name="active"/>
+            <packet opcode="0x1039" name="UpdateCash">
+                <param type="uint" name="amount"/>
             </packet>
             <packet opcode="0x104f" name="UpdateAccountLevel">
                 <param type="int" name="level"/>
+            </packet>
+            <packet opcode="0x1053" name="SendXpMessage">
+                <param type="int" name="xp"/>
+                <param type="int" name="extraXp"/>
+                <param type="int" name="battleXp"/>
             </packet>
             <packet opcode="0x106f" name="ApplyBuff">
                 <param type="ushort" name="id"/>
                 <param type="ushort" name="unk"/>
                 <param type="int" name="unkInfo"/>
                 <param type="int" name="unk"/>
+            </packet>
+            <packet opcode="0x1070" name="UpdateBuff">
+                <param type="int" name="unk"/>
+                <param type="ushort" name="buffId"/>
+                <param type="ushort" name="unk"/>
+                <param type="long" name="unk"/>
+                <param type="byte" name="unk"/>
+                <param type="byte" name="unk"/>
+                <param type="ushort" name="unk"/>
             </packet>
             <packet opcode="0x107d" name="UpdateTitleList">
                 <param type="int" name="acquiredTitleId"/>
@@ -262,7 +309,7 @@
                 <param type="string" size="16" name="name"/>
                 <param type="byte" name="unk"/>
                 <param type="byte" name="unk"/>
-                <param type="ushort" name="unk"/>
+                <param type="ushort" name="kind?"/>
                 <param type="int" name="unk"/>
                 <param type="int" name="hp"/>
                 <param type="int" name="maxHp"/>
@@ -500,12 +547,28 @@
                 <param type="byte" name="unkByte"/>
                 <param type="string" size="128" name="text"/>
             </packet>
+            <packet opcode="0x1c41" name="Unk4C41">
+                <param type="uint" name="accId"/>
+                <param type="bytes" size="16"/>
+                <loop count="12">
+                    <param type="ushort" name="unk"/>
+                    <param type="ushort" name="index"/>
+                    <param type="bytes" size="36"/>
+                </loop>
+            </packet>
             <packet opcode="0x2027" name="InitialUnk202">
                 <param type="ushort" name="unk"/>
                 <param type="ushort" name="unk"/>
                 <param type="ushort" name="unk"/>
                 <param type="byte" name="unk"/>
                 <param type="bytes" size="5"/>
+                <param type="int" name="unk"/>
+            </packet>
+            <packet opcode="0x3005" name="UpdateDirection">
+                <param type="int" name="direction"/>
+            </packet>
+            <packet opcode="0x30a2" name="Unk30A2">
+                <param type="int" name="unk"/>
                 <param type="int" name="unk"/>
             </packet>
             <packet opcode="0x3012" name="UpdateCharGold">
@@ -515,6 +578,15 @@
             </packet>
             <packet opcode="0x3031" name="SendQuestInfo">
                 <param type="ushort" name="questId"/>
+            </packet>
+            <packet opcode="0x303D" name="Unk303D">
+                <param type="int" name="unk"/>
+                <loop count="12">
+                    <param type="ushort" name="unk"/>
+                </loop>
+                <loop count="12">
+                    <param type="byte" name="unk"/>
+                </loop>
             </packet>
             <packet opcode="0x3049" name="SendUnitSpawn">
                 <param type="string" size="16" name="characterName"/>
@@ -529,7 +601,7 @@
                 <param type="bytes" size="12" name="refinements"/>
                 <param type="float" name="coordX"/>
                 <param type="float" name="coordY"/>
-                <param type="int" name="unkInt"/>
+                <param type="int" name="rotation"/>
                 <param type="int" name="curHp"/>
                 <param type="int" name="maxHp"/>
                 <param type="int" name="curMp"/>
@@ -539,7 +611,7 @@
                 <param type="byte" name="charWidth"/>
                 <param type="byte" name="charChest"/>
                 <param type="byte" name="charLeg"/>
-                <param type="ushort" name="unkShort"/>
+                <param type="ushort" name="pranConId"/>
                 <param type="ushort" name="unkShort"/>
                 <param type="ushort" name="unkShort"/>
                 <param type="bytes" size="120" name="buffs"/>
@@ -551,6 +623,11 @@
                 <param type="ushort" name="unk"/>
                 <param type="ushort" name="unk"/>
                 <param type="ushort" name="unk"/>
+                <param type="int" name="unk"/>
+                <param type="int" name="unk"/>
+            </packet>
+            <packet opcode="0x3057" name="Unk3057">
+                <param type="int" name="unk"/>
                 <param type="int" name="unk"/>
                 <param type="int" name="unk"/>
             </packet>
@@ -599,7 +676,9 @@
                 <param type="byte" name="moveSpeed?"/>
                 <param type="int" name="unkInt"/>
             </packet>
-            <packet opcode="0x30c2" name="XignCode Shit"/>
+            <packet opcode="0x30c2" name="XignCodeShit"/>
+            <packet opcode="0x3c7c" name="Unk3C7C">
+            </packet>
             <packet opcode="0x3c86" name="SendChatMsg">
                 <param type="bytes" size="8" name="emptyByte"/>
                 <param type="int" name="chatType"/>
@@ -625,9 +704,17 @@
                 <param type="byte" name="unkByte"/>
                 <param type="ushort" name="time"/>
             </packet>
+            <packet opcode="0x3cbe" name="FinishedInGameState">
+            </packet>
             <packet opcode="0x3f33" name="ResponseDeleteCharToken">
                 <param type="int" name="step?"/>
                 <param type="int" name="unkInt"/>
+            </packet>
+            <packet opcode="0x3f34" name="UpdatePuzzleEvent">
+                <param type="int" name="action"/>
+                <param type="int" name="unk"/>
+                <param type="int" name="accId"/>
+                <param type="int" name="unkAlways1?"/>
             </packet>
         </server>
     </type>
