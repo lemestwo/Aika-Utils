@@ -4,9 +4,9 @@ using Newtonsoft.Json;
 
 namespace Aika_BinToJson.Convertion
 {
-	public class Mn : BaseConvert
+	public class ItemEffect : BaseConvert
 	{
-		public Mn(string path, string outPath) : base(path, outPath)
+		public ItemEffect(string path, string outPath) : base(path, outPath)
 		{
 		}
 
@@ -15,21 +15,17 @@ namespace Aika_BinToJson.Convertion
 			using (var stream = new BinaryReader(File.OpenRead(Path), Encode))
 			{
 				var size = stream.BaseStream.Length;
-				ushort i = 0;
 
-				var list = new List<MnJson>();
-				while (stream.BaseStream.Position < size - 4)
+				var list = new List<ItemEffectJson>();
+				while (stream.BaseStream.Position < size)
 				{
-					var temp = new MnJson()
+					var temp = new ItemEffectJson
 					{
-						Id = i,
-						Name = Encode.GetString(stream.ReadBytes(128)).Trim('\u0000')
+						Name = Encode.GetString(stream.ReadBytes(64)).Trim('\u0000'),
+						Index = stream.ReadUInt32()
 					};
-					i++;
 					if (!string.IsNullOrEmpty(temp.Name))
-					{
 						list.Add(temp);
-					}
 				}
 
 				JsonData = JsonConvert.SerializeObject(list);
@@ -37,9 +33,9 @@ namespace Aika_BinToJson.Convertion
 		}
 	}
 
-	public class MnJson
+	public class ItemEffectJson
 	{
-		public ushort Id { get; set; }
 		public string Name { get; set; }
+		public uint Index { get; set; }
 	}
 }

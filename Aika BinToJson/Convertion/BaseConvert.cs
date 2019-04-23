@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Aika_BinToJson.Convertion
 {
-    public abstract class Base
+    public abstract class BaseConvert
     {
         protected readonly string Path;
         private readonly string _outPath;
@@ -13,7 +13,7 @@ namespace Aika_BinToJson.Convertion
         // Fix accentuation
         protected readonly Encoding Encode = Encoding.GetEncoding("iso-8859-1");
 
-        protected Base(string path, string outPath)
+        protected BaseConvert(string path, string outPath)
         {
             Path = path;
             _outPath = outPath;

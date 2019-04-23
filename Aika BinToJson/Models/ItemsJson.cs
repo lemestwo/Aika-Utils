@@ -8,7 +8,7 @@ namespace Aika_BinToJson.Models
         public string Description { get; set; }
         public bool IsLootBox { get; set; }
         public uint CaeliumId { get; set; }
-        public ushort ItemSlot { get; set; }
+        public ushort ItemType { get; set; }
         public uint HonorCost { get; set; }
         public uint MedalCost { get; set; }
         public uint BuyPrice { get; set; }
@@ -21,7 +21,7 @@ namespace Aika_BinToJson.Models
         public ushort PDef { get; set; }
         public ushort MAtk { get; set; }
         public ushort MDef { get; set; }
-        public ushort CountryFlag { get; set; }
+        public ushort Quality { get; set; }
         public ushort Effect1 { get; set; }
         public ushort Effect2 { get; set; }
         public ushort Effect3 { get; set; }
@@ -29,8 +29,8 @@ namespace Aika_BinToJson.Models
         public ushort Effect2Value { get; set; }
         public ushort Effect3Value { get; set; }
         public ushort MaxLevel { get; set; }
-        public int Unk1 { get; set; }
-        public ushort BuffId { get; set; }
+        public int SubType { get; set; }
+        public ushort GearCoreLevel { get; set; }
         public byte Unk4 { get; set; }
         public byte Unk5 { get; set; }
         public uint Unk6 { get; set; }
@@ -61,12 +61,12 @@ namespace Aika_BinToJson.Models
         public ushort Unk31 { get; set; }
         public ushort Unk32 { get; set; }
         public ushort Unk33 { get; set; }
-        public byte Unk34 { get; set; }
+        public bool Tradeable { get; set; }
         public byte Unk35 { get; set; }
         public ushort Durability { get; set; }
         public bool Unk37 { get; set; }
         public bool Unk38 { get; set; }
-        public bool Unk39 { get; set; }
+        public bool Reinforceable { get; set; }
         public ushort Rank { get; set; }
         public byte Unk41 { get; set; }
         public byte Unk42 { get; set; }

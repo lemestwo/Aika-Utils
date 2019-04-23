@@ -36,25 +36,39 @@
       <HintPath>..\packages\Newtonsoft.Json.12.0.2-beta1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Convertion\Base.cs" />
+    <Compile Include="Convertion\BaseConvert.cs" />
     <Compile Include="Convertion\ExpList.cs" />
+    <Compile Include="Convertion\GearCore.cs" />
+    <Compile Include="Convertion\ItemEffect.cs" />
     <Compile Include="Convertion\ItemList.cs" />
+    <Compile Include="Convertion\MakeItems.cs" />
     <Compile Include="Convertion\Mn.cs" />
     <Compile Include="Convertion\MobPos.cs" />
     <Compile Include="Convertion\NpcPos.cs" />
     <Compile Include="Convertion\PranExpList.cs" />
-    <Compile Include="Models\ExpListJson.cs" />
+    <Compile Include="Convertion\Quest.cs" />
+    <Compile Include="Convertion\Recipe.cs" />
+    <Compile Include="Convertion\RecipeRate.cs" />
+    <Compile Include="Convertion\Reinforce2.cs" />
+    <Compile Include="Convertion\ReinforceA.cs" />
+    <Compile Include="Convertion\SetItem.cs" />
+    <Compile Include="Convertion\SkillData.cs" />
+    <Compile Include="Convertion\Title.cs" />
     <Compile Include="Models\ItemsJson.cs" />
-    <Compile Include="Models\MnJson.cs" />
+    <Compile Include="Models\MakeItemsJson.cs" />
     <Compile Include="Models\MobPosJson.cs" />
-    <Compile Include="Models\NpcPosJson.cs" />
-    <Compile Include="Models\PranExpListJson.cs" />
+    <Compile Include="Models\QuestJson.cs" />
+    <Compile Include="Models\RecipeJson.cs" />
+    <Compile Include="Models\SetItemJson.cs" />
+    <Compile Include="Models\SkillDataJson.cs" />
+    <Compile Include="Models\TitleJson.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

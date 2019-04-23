@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace Aika_BinToJson.Convertion
 {
-    public class MobPos : Base
+    public class MobPos : BaseConvert
     {
         public MobPos(string path, string outPath) : base(path, outPath)
         {

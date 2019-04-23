@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace Aika_BinToJson.Convertion
 {
-    public class ItemList : Base
+    public class ItemList : BaseConvert
     {
         public ItemList(string path, string outPath) : base(path, outPath)
         {
@@ -27,11 +27,12 @@ namespace Aika_BinToJson.Convertion
                     temp.ItemName = Encode.GetString(stream.ReadBytes(64)).Trim('\u0000');
                     temp.ItemName2 = Encode.GetString(stream.ReadBytes(64)).Trim('\u0000');
                     temp.Description = Encode.GetString(stream.ReadBytes(128)).Trim('\u0000');
+                    
                     temp.IsLootBox = stream.ReadUInt16() == 1;
-                    temp.ItemSlot = stream.ReadUInt16();
+                    temp.ItemType = stream.ReadUInt16();
                     temp.CaeliumId = stream.ReadUInt32();
-                    temp.Unk1 = stream.ReadInt32();
-                    temp.BuffId = stream.ReadUInt16(); 
+                    temp.SubType = stream.ReadInt32();
+                    temp.GearCoreLevel = stream.ReadUInt16(); 
                     temp.Unk4 = stream.ReadByte(); // gold related
                     temp.Unk5 = stream.ReadByte(); // gold related
                     temp.Unk6 = stream.ReadUInt32(); // buff related
@@ -54,13 +55,16 @@ namespace Aika_BinToJson.Convertion
                     temp.Unk18 = stream.ReadUInt16();
                     temp.ImageId = stream.ReadUInt16();
                     temp.Unk19 = stream.ReadUInt16();
+                    // 68
                     temp.Unk20 = stream.ReadUInt16();
                     temp.Unk21 = stream.ReadUInt16();
                     temp.Unk22 = stream.ReadUInt16();
+                    // 74
                     temp.MinLevel = stream.ReadUInt16();
                     temp.Unk23 = stream.ReadByte();
                     temp.Unk24 = stream.ReadByte();
                     stream.ReadInt16(); // empty
+                    //80
                     temp.TimeLimit = stream.ReadInt32();
                     stream.ReadByte(); // empty
                     temp.Unk25 = stream.ReadByte() == 1; // consumable / food
@@ -85,9 +89,9 @@ namespace Aika_BinToJson.Convertion
                     stream.ReadUInt16(); // empty
                     stream.ReadUInt16(); // empty
                     stream.ReadUInt16(); // empty
-                    temp.CountryFlag = stream.ReadUInt16();
-                    temp.Unk34 = stream.ReadByte();
-                    temp.Unk35 = stream.ReadByte();
+                    temp.Quality = stream.ReadUInt16();
+                    // 136
+                    temp.Tradeable = (stream.ReadUInt16()&256) == 0;
                     stream.ReadUInt32(); // empty
                     stream.ReadUInt32(); // empty
                     stream.ReadUInt32(); // empty
@@ -102,7 +106,8 @@ namespace Aika_BinToJson.Convertion
                     temp.Effect3Value = stream.ReadUInt16();
                     temp.Unk37 = stream.ReadByte() == 1;
                     temp.Unk38 = stream.ReadByte() == 1;
-                    temp.Unk39 = stream.ReadByte() == 1;
+                    //170
+                    temp.Reinforceable = (stream.ReadByte()&1) == 0;
                     temp.Rank = stream.ReadByte();
                     temp.Unk41 = stream.ReadByte();
                     temp.Unk42 = stream.ReadByte();
