@@ -273,7 +273,7 @@
                 <param type="bytes" size="4" name="emptyCC"/>
                 <loop count="3">
                     <param type="string" size="16" name="characterName"/>
-                    <param type="ushort" name="unk"/>
+                    <param type="ushort" name="nationId"/>
                     <param type="ushort" name="class"/>
                     <param type="byte" name="charWidth"/>
                     <param type="byte" name="charChest"/>
@@ -307,10 +307,10 @@
             </packet>
             <packet opcode="0x1807" name="SendPranToWorld">
                 <param type="string" size="16" name="name"/>
-                <param type="byte" name="unk"/>
-                <param type="byte" name="unk"/>
-                <param type="ushort" name="kind?"/>
-                <param type="int" name="unk"/>
+                <param type="byte" name="pranType"/>
+                <param type="byte" name="food"/>
+                <param type="ushort" name="personality"/>
+                <param type="int" name="devotion"/>
                 <param type="int" name="hp"/>
                 <param type="int" name="maxHp"/>
                 <param type="int" name="mp"/>
@@ -398,9 +398,9 @@
             </packet>
             <packet opcode="0x1825" name="SendToWorld">
                 <param type="int" name="accId"/>
-                <param type="int" name="unkId"/>
+                <param type="int" name="connectionId"/>
                 <param type="int" name="unkInt"/>
-                <param type="int" name="unkInt"/>
+                <param type="int" name="characterId"/>
                 <param type="string" size="16" name="characterName"/>
                 <param type="byte" name="nation?"/>
                 <param type="ushort" name="class"/>
@@ -419,10 +419,7 @@
                 <param type="int" name="maxHp"/>
                 <param type="int" name="curMp"/>
                 <param type="int" name="maxMp"/>
-                <param type="byte" name="unkByte"/>
-                <param type="byte" name="unkByte"/>
-                <param type="byte" name="unkByte"/>
-                <param type="byte" name="unkByte"/>
+                <param type="timei" name="timeNext9AM"/>
                 <param type="int" name="honorPoint"/>
                 <param type="int" name="pvpPoint"/>
                 <param type="int" name="infamyPoint"/>
@@ -448,73 +445,50 @@
                 <param type="ulong" name="charExp"/>
                 <param type="ushort" name="charLevel"/>
                 <param type="bytes" size="154" name="unkBytes"/>
-                <loop count="16">
-                    <param type="ushort" name="Id"/>
-                    <param type="ushort" name="unkShort"/>
-                    <param type="int" name="unkInt"/>
-                    <param type="byte" name="effect1"/>
-                    <param type="byte" name="effect2"/>
-                    <param type="byte" name="effect3"/>
-                    <param type="byte" name="effect1-1"/>
-                    <param type="byte" name="effect2-1"/>
-                    <param type="byte" name="effect3-1"/>
-                    <param type="byte" name="durMin"/>
-                    <param type="byte" name="durMax"/>
-                    <param type="byte" name="ref"/>
-                    <param type="byte" name="unkByte"/>
-                    <param type="ushort" name="time"/>
-                </loop>
+                <param type="bytes" size="320" name="equips"/>
                 <param type="int" name="unkInt"/>
-                <loop count="80">
-                    <param type="ushort" name="Id"/>
-                    <param type="ushort" name="unkShort"/>
-                    <param type="int" name="unkInt"/>
-                    <param type="byte" name="effect1"/>
-                    <param type="byte" name="effect2"/>
-                    <param type="byte" name="effect3"/>
-                    <param type="byte" name="effect1-1"/>
-                    <param type="byte" name="effect2-1"/>
-                    <param type="byte" name="effect3-1"/>
-                    <param type="byte" name="durMin"/>
-                    <param type="byte" name="durMax"/>
-                    <param type="byte" name="ref"/>
-                    <param type="byte" name="unkByte"/>
-                    <param type="ushort" name="time"/>
-                </loop>
-                <loop count="4">
-                    <param type="ushort" name="Id"/>
-                    <param type="ushort" name="unkShort"/>
-                    <param type="uint" name="unkInt"/>
-                    <param type="byte" name="effect1"/>
-                    <param type="byte" name="effect2"/>
-                    <param type="byte" name="effect3"/>
-                    <param type="byte" name="effect1-1"/>
-                    <param type="byte" name="effect2-1"/>
-                    <param type="byte" name="effect3-1"/>
-                    <param type="byte" name="durMin"/>
-                    <param type="byte" name="durMax"/>
-                    <param type="byte" name="ref"/>
-                    <param type="byte" name="unkByte"/>
-                    <param type="ushort" name="time"/>
-                </loop>
+                <param type="bytes" size="1680" name="inventory"/>
                 <param type="long" name="gold"/>
-                <param type="bytes" size="384" name=""/>
-                <loop count="16">
-                    <param type="ushort" name="id"/>
-                    <param type="bytes" size="10" name=""/>
-                </loop>
-                <param type="bytes" size="20" name=""/>
+
+                <param type="bytes" size="384"/>
+                <param type="bytes" size="212"/>
+
                 <param type="ushort" name="coordX"/>
                 <param type="ushort" name="coordY"/>
-                <param type="byte" name="world?"/>
-                <param type="bytes" size="571" name=""/>
+                <param type="short" name="rotation"/>
+
+                <param type="bytes" size="130" name=""/>
+                <param type="timei" name="creationTime"/>
+                <param type="bytes" size="436" name=""/>
+
                 <param type="string" size="4" name="token"/>
-                <param type="bytes" size="332" name=""/>
-                <param type="bytes" size="68" name=""/>
-                <param type="bytes" size="620" name=""/>
-                <param type="string" size="16" name="pran1"/>
-                <param type="string" size="16" name="pran2"/>
-                <param type="long" name="unkLong"/>
+
+                <param type="bytes" size="332" name="skills?"/>
+                <param type="bytes" size="100" name="skillBar"/>
+                <param type="bytes" size="128" name="Packet_0x1086"/>
+
+                <param type="bytes" size="416" name=""/>
+
+                <param type="timei" name="timeNext3AM"/>
+                <param type="int" name="empty?"/>
+                <param type="int" name="always3600"/>
+
+                <param type="bytes" size="48" name=""/>
+                <param type="timei" name="timeMondayAt9AM"/>
+                <param type="timei" name="nextLoginCoin"/>
+                <param type="bytes" size="20" name=""/>
+                <param type="short" name="unk"/>
+                <param type="short" name="unk"/>
+                <param type="bytes" size="20" name=""/>
+                <param type="int" name="unk"/>
+                <param type="timei" name="loginTime"/>
+                <param type="bytes" size="12" name=""/>
+
+                <param type="string" size="16" name="pran1Name"/>
+                <param type="string" size="16" name="pran2Name"/>
+                <param type="byte" name="pran1TypeId"/>
+                <param type="byte" name="pran2TypeId"/>
+                <param type="short" name="empty"/>
             </packet>
             <packet opcode="0x1836" name="UpdateNationGovernment">
                 <param type="string" size="20" name="guildName"/>
@@ -603,8 +577,8 @@
                 <param type="float" name="coordY"/>
                 <param type="int" name="rotation"/>
                 <param type="int" name="curHp"/>
-                <param type="int" name="maxHp"/>
                 <param type="int" name="curMp"/>
+                <param type="int" name="maxHp"/>
                 <param type="int" name="maxMp"/>
                 <param type="ushort" name="unkShort"/>
                 <param type="byte" name="spawnType"/>

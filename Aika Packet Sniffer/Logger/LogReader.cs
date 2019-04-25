@@ -117,10 +117,11 @@ namespace Aika_Packet_Sniffer.Logger
                     stream.ReadInt32();
                     var opcode = stream.ReadUInt16();
                     // TODO - Remove later
-                    if (opcode == 0x3006)
+                    if (opcode == 0x3006 || opcode == 0x30c2)
                     {
                         return null;
                     }
+
                     var time = stream.ReadInt32();
                     var template = new PacketListView
                     {

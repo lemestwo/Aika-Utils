@@ -8,10 +8,6 @@ namespace Aika_BinToJson.Convertion
 {
     public class ItemList : BaseConvert
     {
-        public ItemList(string path, string outPath) : base(path, outPath)
-        {
-        }
-
         public override void Convert()
         {
             using (var stream = new BinaryReader(File.OpenRead(Path), Encode))
@@ -27,12 +23,12 @@ namespace Aika_BinToJson.Convertion
                     temp.ItemName = Encode.GetString(stream.ReadBytes(64)).Trim('\u0000');
                     temp.ItemName2 = Encode.GetString(stream.ReadBytes(64)).Trim('\u0000');
                     temp.Description = Encode.GetString(stream.ReadBytes(128)).Trim('\u0000');
-                    
+
                     temp.IsLootBox = stream.ReadUInt16() == 1;
                     temp.ItemType = stream.ReadUInt16();
                     temp.CaeliumId = stream.ReadUInt32();
                     temp.SubType = stream.ReadInt32();
-                    temp.GearCoreLevel = stream.ReadUInt16(); 
+                    temp.GearCoreLevel = stream.ReadUInt16();
                     temp.Unk4 = stream.ReadByte(); // gold related
                     temp.Unk5 = stream.ReadByte(); // gold related
                     temp.Unk6 = stream.ReadUInt32(); // buff related
@@ -91,7 +87,7 @@ namespace Aika_BinToJson.Convertion
                     stream.ReadUInt16(); // empty
                     temp.Quality = stream.ReadUInt16();
                     // 136
-                    temp.Tradeable = (stream.ReadUInt16()&256) == 0;
+                    temp.Tradeable = (stream.ReadUInt16() & 256) == 0;
                     stream.ReadUInt32(); // empty
                     stream.ReadUInt32(); // empty
                     stream.ReadUInt32(); // empty
@@ -107,7 +103,7 @@ namespace Aika_BinToJson.Convertion
                     temp.Unk37 = stream.ReadByte() == 1;
                     temp.Unk38 = stream.ReadByte() == 1;
                     //170
-                    temp.Reinforceable = (stream.ReadByte()&1) == 0;
+                    temp.Reinforceable = (stream.ReadByte() & 1) == 0;
                     temp.Rank = stream.ReadByte();
                     temp.Unk41 = stream.ReadByte();
                     temp.Unk42 = stream.ReadByte();

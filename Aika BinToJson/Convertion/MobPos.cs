@@ -8,10 +8,6 @@ namespace Aika_BinToJson.Convertion
 {
     public class MobPos : BaseConvert
     {
-        public MobPos(string path, string outPath) : base(path, outPath)
-        {
-        }
-
         public override void Convert()
         {
             using (var stream = new BinaryReader(File.OpenRead(Path), Encode))

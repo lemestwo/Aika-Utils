@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Aika_Packet_Sniffer"
         xmlns:control="clr-namespace:WpfHexaEditor;assembly=WPFHexaEditor"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="1100" Background="#FFEAEAEA">
+        Title="MainWindow" Height="800" Width="1000" Background="#FFEAEAEA">
     <DockPanel>
         <Menu DockPanel.Dock="Top" Background="#FFFBFBFB" Padding="2">
             <MenuItem Header="_File">
@@ -43,7 +43,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="250" />
+                <RowDefinition Height="300" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="7*" MinWidth="200" />

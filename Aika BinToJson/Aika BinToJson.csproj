@@ -49,9 +49,11 @@
     <Compile Include="Convertion\ItemEffect.cs" />
     <Compile Include="Convertion\ItemList.cs" />
     <Compile Include="Convertion\MakeItems.cs" />
+    <Compile Include="Convertion\Map.cs" />
     <Compile Include="Convertion\Mn.cs" />
     <Compile Include="Convertion\MobPos.cs" />
     <Compile Include="Convertion\NpcPos.cs" />
+    <Compile Include="Convertion\ObjPos.cs" />
     <Compile Include="Convertion\PranExpList.cs" />
     <Compile Include="Convertion\Quest.cs" />
     <Compile Include="Convertion\Recipe.cs" />
@@ -63,6 +65,7 @@
     <Compile Include="Convertion\Title.cs" />
     <Compile Include="Models\ItemsJson.cs" />
     <Compile Include="Models\MakeItemsJson.cs" />
+    <Compile Include="Models\MapJson.cs" />
     <Compile Include="Models\MobPosJson.cs" />
     <Compile Include="Models\QuestJson.cs" />
     <Compile Include="Models\RecipeJson.cs" />

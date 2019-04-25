@@ -6,14 +6,14 @@ namespace Aika_BinToJson.Convertion
 {
     public abstract class BaseConvert
     {
-        protected readonly string Path;
-        private readonly string _outPath;
+        protected string Path;
+        private string _outPath;
         protected string JsonData;
         
         // Fix accentuation
         protected readonly Encoding Encode = Encoding.GetEncoding("iso-8859-1");
 
-        protected BaseConvert(string path, string outPath)
+        public void SetupFile(string path, string outPath)
         {
             Path = path;
             _outPath = outPath;
