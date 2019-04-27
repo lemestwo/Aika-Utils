@@ -48,6 +48,11 @@
                 <param type="int" name="chatOption"/>
                 <param type="int" name="unkId"/>
             </packet>
+            <packet opcode="0x301d" name="RequestUseItem">
+                <param type="int" name="slotType"/>
+                <param type="int" name="slot"/>
+                <param type="int" name="data"/>
+            </packet>
             <packet opcode="0x30bf" name="MoveUnit">
                 <param type="float" name="coordX"/>
                 <param type="float" name="coordY"/>

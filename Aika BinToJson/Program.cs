@@ -99,6 +99,9 @@ namespace Aika_BinToJson
                     case "ObjPos":
                         convert = new ObjPos();
                         break;
+                    case "SPosition":
+                        convert = new SPosition();
+                        break;
                 }
 
                 if (convert != null)
