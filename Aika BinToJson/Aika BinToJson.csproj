@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Convertion\BaseConvert.cs" />
+    <Compile Include="Convertion\Dialog.cs" />
     <Compile Include="Convertion\ExpList.cs" />
     <Compile Include="Convertion\GearCore.cs" />
     <Compile Include="Convertion\ItemEffect.cs" />

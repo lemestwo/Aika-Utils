@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using System.Windows;
 using System.Xml;
 using Aika_Packet_Sniffer.Model;
+using Aika_Packet_Sniffer.PacketDump;
 
 namespace Aika_Packet_Sniffer.Logger.Xml
 {
@@ -23,6 +25,25 @@ namespace Aika_Packet_Sniffer.Logger.Xml
             _port = port;
             _opcode = opcode;
             _pos = 0;
+
+            switch (opcode)
+            {
+                case 0x3049:
+                    Dumper.ParseNpcToFile(data);
+                    break;
+                case 0x100e:
+                    Dumper.ParseOpenChat(data);
+                    break;
+                case 0x1015:
+                    Dumper.ParsePlaySound(data);
+                    break;
+                case 0x1012:
+                    Dumper.ParseOption(data);
+                    break;
+                case 0x100f:
+                    Dumper.ParseCloseChat();
+                    break;
+            }
         }
 
         public List<PacketParseListView> ParseData(ref string packetName)
@@ -173,6 +194,12 @@ namespace Aika_Packet_Sniffer.Logger.Xml
                     default:
                         value = "";
                         break;
+                }
+
+                // TODO - Need to find behavior for 255+ players online
+                if (name == "hHash2" && type == "ushort" && (ushort) value > 250 && (ushort) value < 400)
+                {
+                    MessageBox.Show("found it!");
                 }
 
                 _pos = stream.BaseStream.Position;

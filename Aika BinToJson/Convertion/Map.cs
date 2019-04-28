@@ -57,7 +57,7 @@ namespace Aika_BinToJson.Convertion
                     list.AddRange(temp.Where(mapJson => !string.IsNullOrEmpty(mapJson.Name)));
                 }
 
-                JsonData = JsonConvert.SerializeObject(list);
+                JsonData = JsonConvert.SerializeObject(list, Formatting.Indented);
             }
         }
     }

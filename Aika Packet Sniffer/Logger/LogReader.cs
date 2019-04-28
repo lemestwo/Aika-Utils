@@ -56,7 +56,7 @@ namespace Aika_Packet_Sniffer.Logger
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                throw;
+                //throw;
             }
             finally
             {

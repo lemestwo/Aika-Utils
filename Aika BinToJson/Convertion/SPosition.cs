@@ -26,7 +26,7 @@ namespace Aika_BinToJson.Convertion
                         },
                         Map = stream.ReadInt16(),
                         Location = stream.ReadInt16(),
-                        Unk2 = stream.ReadInt32(),
+                        TpLevel = stream.ReadInt32(),
                         MapName = Encode.GetString(stream.ReadBytes(64)).Trim('\u0000'),
                         RegionName = Encode.GetString(stream.ReadBytes(64)).Trim('\u0000'),
                     };
@@ -36,7 +36,7 @@ namespace Aika_BinToJson.Convertion
                         list.Add(temp);
                 }
 
-                JsonData = JsonConvert.SerializeObject(list);
+                JsonData = JsonConvert.SerializeObject(list, Formatting.Indented);
             }
         }
     }
@@ -48,7 +48,7 @@ namespace Aika_BinToJson.Convertion
         public int[] Coord { get; set; }
         public short Map { get; set; }
         public short Location { get; set; }
-        public int Unk2 { get; set; }
+        public int TpLevel { get; set; }
         public string MapName { get; set; }
         public string RegionName { get; set; }
     }

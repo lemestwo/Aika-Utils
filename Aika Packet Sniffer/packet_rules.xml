@@ -176,9 +176,9 @@
             </packet>
             <packet opcode="0x1012" name="SendNpcOption">
                 <param type="int" name="optionId"/>
-                <param type="int" name="unInt"/>
+                <param type="int" name="subOptionId"/>
                 <param type="string" size="60" name="text"/>
-                <param type="int" name="unInt"/>
+                <param type="int" name="unkInt"/>
                 <param type="int" name="FFInt"/>
             </packet>
             <packet opcode="0x1015" name="PlaySound">
@@ -546,14 +546,17 @@
             <packet opcode="0x3005" name="UpdateDirection">
                 <param type="int" name="direction"/>
             </packet>
-            <packet opcode="0x30a2" name="Unk30A2">
-                <param type="int" name="unk"/>
-                <param type="int" name="unk"/>
+            <packet opcode="0x3010" name="OpenNpcShop">
+                <param type="int" name="shopType"/>
             </packet>
             <packet opcode="0x3012" name="UpdateCharGold">
                 <param type="bytes" size="4"/>
                 <param type="ulong" name="invGold"/>
                 <param type="ulong" name="bankGold"/>
+            </packet>
+            <packet opcode="0x30a2" name="Unk30A2">
+                <param type="int" name="unk"/>
+                <param type="int" name="unk"/>
             </packet>
             <packet opcode="0x3031" name="SendQuestInfo">
                 <param type="ushort" name="questId"/>

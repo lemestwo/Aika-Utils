@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Aika_Packet_Sniffer"
         xmlns:control="clr-namespace:WpfHexaEditor;assembly=WPFHexaEditor"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="1000" Background="#FFEAEAEA">
+        Title="Aika Packet Sniffer" Height="800" Width="1000" Background="#FFEAEAEA" Icon="Images/pressure.png">
     <DockPanel>
         <Menu DockPanel.Dock="Top" Background="#FFFBFBFB" Padding="2">
             <MenuItem Header="_File">

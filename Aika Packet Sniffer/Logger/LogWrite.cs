@@ -50,6 +50,13 @@ namespace Aika_Packet_Sniffer.Logger
                             var pData = stream.ReadBytes(size);
                             AddPacket(pData, origin, port);
                         }
+
+                        // TODO - Find whats causing the problem
+                        if (stream.BaseStream.Length > 7000)
+                        {
+                            storedData = new byte[0];
+                            return;
+                        }
                     }
                 }
             }

@@ -28,7 +28,7 @@ namespace Aika_BinToJson.Convertion
                     }
                 }
 
-                JsonData = JsonConvert.SerializeObject(list);
+                JsonData = JsonConvert.SerializeObject(list, Formatting.Indented);
             }
         }
     }
