@@ -31,6 +31,7 @@ namespace Aika_Packet_Sniffer.Logger
             var fullData = new byte[storedData.Length + data.Length];
             Buffer.BlockCopy(storedData, 0, fullData, 0, storedData.Length);
             Buffer.BlockCopy(data, 0, fullData, storedData.Length, data.Length);
+            storedData = new byte[0];
 
             using (var ms = new MemoryStream(fullData))
             {
@@ -49,13 +50,6 @@ namespace Aika_Packet_Sniffer.Logger
                         {
                             var pData = stream.ReadBytes(size);
                             AddPacket(pData, origin, port);
-                        }
-
-                        // TODO - Find whats causing the problem
-                        if (stream.BaseStream.Length > 7000)
-                        {
-                            storedData = new byte[0];
-                            return;
                         }
                     }
                 }

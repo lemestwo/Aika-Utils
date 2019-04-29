@@ -48,10 +48,24 @@
                 <param type="int" name="chatOption"/>
                 <param type="int" name="unkId"/>
             </packet>
+            <packet opcode="0x3013" name="BuyFromNpcStore">
+                <param type="int" name="npcId"/>
+                <param type="int" name="unk"/>
+                <param type="int" name="itemIndex"/>
+            </packet>
             <packet opcode="0x301d" name="RequestUseItem">
                 <param type="int" name="slotType"/>
                 <param type="int" name="slot"/>
                 <param type="int" name="data"/>
+            </packet>
+            <packet opcode="0x302d" name="RequestEnchant">
+                <param type="int" name="enchantType"/>
+                <param type="int" name="slotWeapon"/>
+                <param type="int" name="slotReagent"/>
+                <param type="int" name="slotCash"/>
+            </packet>
+            <packet opcode="0x3048" name="NpcShopClosed">
+                <param type="int" name="storeType"/>
             </packet>
             <packet opcode="0x30bf" name="MoveUnit">
                 <param type="float" name="coordX"/>
@@ -229,9 +243,14 @@
                 <param type="int" name="citizenId"/>
                 <param type="short" name="nationId"/>
                 <param type="short" name="guildLogoIndex"/>
-                <param type="int" name="guildid?"/>
-                <param type="int" name="guildid?"/>
+                <param type="int" name="guildId?"/>
+                <param type="int" name="guildId?"/>
                 <param type="bytes" size="16"/>
+            </packet>
+            <packet opcode="0x1037" name="UpdateBank">
+                <param type="int" name="unkInt"/>
+                <param type="ulong" name="goldBank"/>
+                <param type="bytes" size="1720" name="Items"/>
             </packet>
             <packet opcode="0x1038" name="UpdatePremiumStash">
             </packet>

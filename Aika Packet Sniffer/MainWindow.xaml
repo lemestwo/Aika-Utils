@@ -55,8 +55,11 @@
                 <StackPanel Orientation="Horizontal">
                     <Label Margin="4">Opcode:</Label>
                     <TextBox x:Name="SearchBox" Margin="4" Width="100" Padding="4" />
-                    <Button Margin="4" Padding="10,0,10,0" Content="Search!" IsDefault="True" Click="SearchButton_Click" />
+                    <Button Margin="4" Padding="10,0,10,0" Content="Search!" IsDefault="True"
+                            Click="SearchButton_Click" />
                     <Button Margin="4" Padding="10,0,10,0" Content="Clear" Click="ClearButton_OnClick" />
+                    <Button Margin="4" Padding="10,0,10,0" Content="Dumper" Click="DumperButton_OnClick" />
+                    <Label x:Name="DumperLabel" Margin="4" Content="Status:" />
                 </StackPanel>
             </Border>
             <GridSplitter Margin="0,0,0,2" Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" HorizontalAlignment="Stretch" />

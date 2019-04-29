@@ -26,6 +26,7 @@ namespace Aika_Packet_Sniffer.Logger.Xml
             _opcode = opcode;
             _pos = 0;
 
+            if (!Dumper.IsEnabled) return;
             switch (opcode)
             {
                 case 0x3049:
@@ -42,6 +43,9 @@ namespace Aika_Packet_Sniffer.Logger.Xml
                     break;
                 case 0x100f:
                     Dumper.ParseCloseChat();
+                    break;
+                case 0x1006:
+                    Dumper.ParseStoreItems(data);
                     break;
             }
         }

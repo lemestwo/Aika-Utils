@@ -11,9 +11,42 @@ namespace Aika_Packet_Sniffer.PacketDump
     public static class Dumper
     {
         public const string Path = "D:\\Aika Npc Dump\\";
+        public static bool IsEnabled = false;
+        
         private static uint _lastNpcId = 0;
         private static DialogOptions _dialogTemp;
         private static Dictionary<uint, SendUnitSpawn> _parsedNpcs; // conId, Data
+        private static List<ushort> _storeType;
+        private const string StoreTypePath = Path + "Enums\\StoreType.json";
+
+        private static void NewStoreType(ushort id)
+        {
+            _storeType.Add(id);
+            var temp = _storeType.Distinct().ToList();
+            SaveToFile(StoreTypePath, temp, false);
+        }
+
+        public static void ParseStoreItems(byte[] data)
+        {
+            using (var ms = new MemoryStream(data))
+            using (var stream = new BinaryReader(ms, Encoding.GetEncoding("iso-8859-1")))
+            {
+                stream.ReadBytes(12);
+                var temp = new StoreData();
+                var conId = stream.ReadUInt16();
+                temp.StoreType = stream.ReadUInt16();
+                NewStoreType(temp.StoreType);
+                temp.Items = new ushort[40];
+                for (var i = 0; i < 40; i++)
+                    temp.Items[i] = stream.ReadUInt16();
+
+                if (!_parsedNpcs.ContainsKey(conId)) return;
+                temp.NpcId = _parsedNpcs[conId].NpcId;
+
+                var pathFile = $"{Path}Npcs\\{temp.NpcId}\\StoreData.json";
+                SaveToFile(pathFile, temp);
+            }
+        }
 
         public static void ParseCloseChat()
         {
@@ -135,10 +168,10 @@ namespace Aika_Packet_Sniffer.PacketDump
             SaveToFile(pathFile, temp);
         }
 
-        private static void SaveToFile(string pathFile, object data)
+        private static void SaveToFile(string pathFile, object data, bool checkFileExists = true)
         {
             new FileInfo(pathFile).Directory?.Create();
-            if (File.Exists(pathFile)) return;
+            if (checkFileExists && File.Exists(pathFile)) return;
 
             using (var sw = new StreamWriter(pathFile, false))
             using (var writer = new JsonTextWriter(sw))
@@ -166,6 +199,9 @@ namespace Aika_Packet_Sniffer.PacketDump
                 if (!_parsedNpcs.ContainsKey(temp.ConnectionId))
                     _parsedNpcs.Add(temp.ConnectionId, temp);
             }
+
+            var storeTypeData = File.ReadAllText(StoreTypePath);
+            _storeType = JsonConvert.DeserializeObject<List<ushort>>(storeTypeData) ?? new List<ushort>();
         }
     }
 }

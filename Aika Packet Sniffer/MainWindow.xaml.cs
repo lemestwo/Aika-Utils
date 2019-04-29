@@ -28,7 +28,7 @@ namespace Aika_Packet_Sniffer
         public MainWindow()
         {
             InitializeComponent();
-            
+
             System.Threading.Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("en");
             RulesParser.Init();
             Dumper.Init();
@@ -277,6 +277,12 @@ namespace Aika_Packet_Sniffer
         {
             SearchBox.Text = string.Empty;
             SearchButton_Click(sender, e);
+        }
+
+        private void DumperButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            Dumper.IsEnabled = !Dumper.IsEnabled;
+            DumperLabel.Content = "Status: Dumper " + (Dumper.IsEnabled ? "ON" : "OFF") + ".";
         }
     }
 }

@@ -72,6 +72,7 @@
     </Compile>
     <Compile Include="PacketDump\Dumper.cs" />
     <Compile Include="PacketDump\Model\DialogOptions.cs" />
+    <Compile Include="PacketDump\Model\StoreData.cs" />
     <Compile Include="PacketDump\NpcPos.cs" />
     <Compile Include="PacketDump\Model\SendUnitSpawn.cs" />
     <Compile Include="Logger\Decryption.cs" />
