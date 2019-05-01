@@ -32,6 +32,9 @@ namespace Aika_Packet_Sniffer.Logger.Xml
                 case 0x3049:
                     Dumper.ParseNpcToFile(data);
                     break;
+                case 0x305e:
+                    Dumper.ParseMobTofile(data);
+                    break;
                 case 0x100e:
                     Dumper.ParseOpenChat(data);
                     break;

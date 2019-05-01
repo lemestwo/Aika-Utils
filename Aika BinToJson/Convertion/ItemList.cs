@@ -24,7 +24,7 @@ namespace Aika_BinToJson.Convertion
                     temp.ItemName2 = Encode.GetString(stream.ReadBytes(64)).Trim('\u0000');
                     temp.Description = Encode.GetString(stream.ReadBytes(128)).Trim('\u0000');
 
-                    temp.IsLootBox = stream.ReadUInt16() == 1;
+                    temp.IsStackable = stream.ReadUInt16() == 1;
                     temp.ItemType = stream.ReadUInt16();
                     temp.CaeliumId = stream.ReadUInt32();
                     temp.SubType = stream.ReadInt32();

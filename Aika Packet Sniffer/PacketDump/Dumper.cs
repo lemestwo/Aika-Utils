@@ -12,12 +12,13 @@ namespace Aika_Packet_Sniffer.PacketDump
     {
         public const string Path = "D:\\Aika Npc Dump\\";
         public static bool IsEnabled = false;
-        
+
         private static uint _lastNpcId = 0;
         private static DialogOptions _dialogTemp;
         private static Dictionary<uint, SendUnitSpawn> _parsedNpcs; // conId, Data
         private static List<ushort> _storeType;
         private const string StoreTypePath = Path + "Enums\\StoreType.json";
+        private static readonly Encoding Encoding = Encoding.GetEncoding("iso-8859-1");
 
         private static void NewStoreType(ushort id)
         {
@@ -29,7 +30,7 @@ namespace Aika_Packet_Sniffer.PacketDump
         public static void ParseStoreItems(byte[] data)
         {
             using (var ms = new MemoryStream(data))
-            using (var stream = new BinaryReader(ms, Encoding.GetEncoding("iso-8859-1")))
+            using (var stream = new BinaryReader(ms, Encoding))
             {
                 stream.ReadBytes(12);
                 var temp = new StoreData();
@@ -52,6 +53,7 @@ namespace Aika_Packet_Sniffer.PacketDump
         {
             if (_lastNpcId <= 0 || _dialogTemp == null || _dialogTemp.DialogData.Count <= 0) return;
 
+            _dialogTemp.NpcId = _lastNpcId;
             var pathFile = $"{Path}Npcs\\{_lastNpcId}\\DialogData.json";
             SaveToFile(pathFile, _dialogTemp);
 
@@ -63,14 +65,14 @@ namespace Aika_Packet_Sniffer.PacketDump
         {
             if (_lastNpcId <= 0 || _dialogTemp == null) return;
             using (var ms = new MemoryStream(data))
-            using (var stream = new BinaryReader(ms, Encoding.GetEncoding("iso-8859-1")))
+            using (var stream = new BinaryReader(ms, Encoding))
             {
                 stream.ReadBytes(12);
                 var temp = new DialogData
                 {
                     OptionId = stream.ReadUInt32(),
                     SubOptionId = stream.ReadUInt32(),
-                    Text = Encoding.GetEncoding("iso-8859-1").GetString(stream.ReadBytes(60)).Trim('\u0000'),
+                    Text = Encoding.GetString(stream.ReadBytes(60)).Trim('\u0000'),
                     Unk = stream.ReadInt32()
                 };
                 _dialogTemp.DialogData.Add(temp);
@@ -81,7 +83,7 @@ namespace Aika_Packet_Sniffer.PacketDump
         {
             if (_lastNpcId <= 0 || _dialogTemp == null) return;
             using (var ms = new MemoryStream(data))
-            using (var stream = new BinaryReader(ms, Encoding.GetEncoding("iso-8859-1")))
+            using (var stream = new BinaryReader(ms, Encoding))
             {
                 stream.ReadBytes(12);
                 _dialogTemp.SoundId = stream.ReadInt32();
@@ -93,7 +95,7 @@ namespace Aika_Packet_Sniffer.PacketDump
         {
             _dialogTemp = new DialogOptions();
             using (var ms = new MemoryStream(data))
-            using (var stream = new BinaryReader(ms, Encoding.GetEncoding("iso-8859-1")))
+            using (var stream = new BinaryReader(ms, Encoding))
             {
                 stream.ReadBytes(12);
                 var conId = stream.ReadUInt32();
@@ -104,17 +106,50 @@ namespace Aika_Packet_Sniffer.PacketDump
             }
         }
 
+        public static void ParseMobTofile(byte[] data)
+        {
+            var temp = new MobData();
+            using (var ms = new MemoryStream(data))
+            using (var stream = new BinaryReader(ms, Encoding))
+            {
+                stream.ReadBytes(12);
+                temp.MobModel = stream.ReadUInt32();
+                stream.ReadBytes(8);
+                temp.Unk7 = stream.ReadInt32();
+                stream.ReadBytes(12);
+                temp.Hp1 = stream.ReadUInt32();
+                temp.Hp2 = stream.ReadUInt32();
+                temp.Hp3 = stream.ReadUInt32();
+                stream.ReadBytes(5);
+                temp.Unk1 = stream.ReadByte();
+                temp.Unk2 = stream.ReadByte();
+                temp.Unk3 = stream.ReadByte();
+                stream.ReadBytes(9);
+                temp.Width = stream.ReadByte();
+                temp.Chest = stream.ReadByte();
+                temp.Leg = stream.ReadByte();
+                stream.ReadBytes(2);
+                temp.Unk4 = stream.ReadByte();
+                temp.Unk5 = stream.ReadByte();
+                temp.MobId = stream.ReadUInt32();
+                temp.Unk6 = stream.ReadUInt32();
+            }
+
+            var pathFile = $"{Path}Mobs\\{temp.MobId}\\MobData.json";
+            SaveToFile(pathFile, temp);
+        }
+
         public static void ParseNpcToFile(byte[] data)
         {
             var temp = new SendUnitSpawn();
             using (var ms = new MemoryStream(data))
-            using (var stream = new BinaryReader(ms, Encoding.GetEncoding("iso-8859-1")))
+            using (var stream = new BinaryReader(ms, Encoding))
             {
                 stream.ReadInt32();
                 temp.ConnectionId = stream.ReadUInt16();
                 stream.ReadUInt16();
                 stream.ReadInt32();
-                temp.Name = Encoding.GetEncoding("iso-8859-1").GetString(stream.ReadBytes(16)).Trim('\u0000');
+                temp.Name = Encoding.GetString(stream.ReadBytes(16)).Trim('\u0000');
                 temp.Hair = stream.ReadUInt16();
                 temp.Face = stream.ReadUInt16();
                 temp.Helmet = stream.ReadUInt16();
@@ -146,13 +181,13 @@ namespace Aika_Packet_Sniffer.PacketDump
                     if (tBuff > 0) temp.Buffs.Add(tBuff);
                 }
 
-                for (var i = 0; i < 60; i++)
+                for (var i = 0; i < 120; i++)
                 {
-                    var tUnk = stream.ReadInt32();
+                    var tUnk = stream.ReadUInt16();
                     if (tUnk > 0) temp.Unk3.Add(tUnk);
                 }
 
-                temp.Title = Encoding.GetEncoding("iso-8859-1").GetString(stream.ReadBytes(32)).Trim('\u0000');
+                temp.Title = Encoding.GetString(stream.ReadBytes(32)).Trim('\u0000');
                 stream.ReadInt32();
                 temp.Unk4 = stream.ReadUInt16();
             }
@@ -160,6 +195,7 @@ namespace Aika_Packet_Sniffer.PacketDump
             if (!ushort.TryParse(temp.Name, out var npcId)) return;
 
             temp.NpcId = npcId;
+            temp.NpcIdX = NpcPos.GetNpcIdX(temp.NpcId);
 
             var pathFile = NpcPos.IsStaticNpc(npcId)
                 ? $"{Path}Npcs\\{temp.NpcId}\\UnitData.json"

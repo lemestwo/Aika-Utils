@@ -43,10 +43,20 @@ namespace Aika_Packet_Sniffer.PacketDump
 
             return false;
         }
+
+        public static ushort GetNpcIdX(ushort id)
+        {
+            foreach (var npc in _npcPositions)
+                if (npc.NpcId == id)
+                    return npc.LoopId;
+
+            return 0;
+        }
     }
 
     public class NpcPosJson
     {
+        public ushort LoopId { get; set; }
         public ushort NpcId { get; set; }
     }
 }

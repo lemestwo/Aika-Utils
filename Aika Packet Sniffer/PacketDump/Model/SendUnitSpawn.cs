@@ -4,6 +4,7 @@ namespace Aika_Packet_Sniffer.PacketDump.Model
 {
     public class SendUnitSpawn
     {
+        public ushort NpcIdX { get; set; }
         public ushort ConnectionId { get; set; }
         public string Name { get; set; }
         public ushort NpcId { get; set; }
@@ -31,14 +32,14 @@ namespace Aika_Packet_Sniffer.PacketDump.Model
         public ushort ConId { get; set; }
         public short Unk2 { get; set; }
         public List<ushort> Buffs { get; }
-        public List<int> Unk3 { get; }
+        public List<ushort> Unk3 { get; }
         public string Title { get; set; }
         public ushort Unk4 { get; set; }
 
         public SendUnitSpawn()
         {
             Buffs = new List<ushort>();
-            Unk3 = new List<int>();
+            Unk3 = new List<ushort>();
         }
     }
 }
