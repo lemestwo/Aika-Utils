@@ -2,21 +2,23 @@ namespace Aika_BinToJson.Models
 {
     public class SkillDataJson
     {
-        public ushort LoopId { get; set; }
+        public ushort Id { get; set; }
         public uint IconId { get; set; }
-        public uint LevelRequired { get; set; }
-        public uint LevelCap { get; set; }
+        public uint RequiredLevel { get; set; }
+        public uint MaxLevel { get; set; }
         public uint Level { get; set; }
+        public uint Tier { get; set; }
+        public ushort TierPos { get; set; }
         public int Unk { get; set; }
         public string Name { get; set; }
         public string Name2 { get; set; }
-        public uint SkillPoints { get; set; }
+        public uint LearnSkillPoint { get; set; }
         public uint LearnPrice { get; set; }
-        public uint SkillProfession { get; set; }
+        public uint Profession { get; set; }
         public uint GuildSkill { get; set; }
         public uint Unk2 { get; set; }
         public uint Mp { get; set; }
-        public uint Faction { get; set; }
+        public uint Facion { get; set; }
         public uint Cooldown { get; set; }
         public int[] InstantCastEffect { get; set; }
         public int[] SpellDurationEffect { get; set; }

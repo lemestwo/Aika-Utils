@@ -117,7 +117,7 @@ namespace Aika_Packet_Sniffer.Logger
                     stream.ReadInt32();
                     var opcode = stream.ReadUInt16();
                     // TODO - Remove later
-                    if (opcode == 0x3006 || opcode == 0x30c2)
+                    if (opcode == 0x3006 || opcode == 0x30c2 || opcode == 0x30bf)
                     {
                         return null;
                     }

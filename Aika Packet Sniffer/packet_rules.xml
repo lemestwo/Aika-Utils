@@ -53,6 +53,10 @@
                 <param type="int" name="unk"/>
                 <param type="int" name="itemIndex"/>
             </packet>
+            <packet opcode="0x301c" name="BuySkillFromNpc">
+                <param type="uint" name="skillId"/>
+                <param type="uint" name="npcConId"/>
+            </packet>
             <packet opcode="0x301d" name="RequestUseItem">
                 <param type="int" name="slotType"/>
                 <param type="int" name="slot"/>
@@ -67,6 +71,13 @@
                 <param type="int" name="slotWeapon"/>
                 <param type="int" name="slotReagent"/>
                 <param type="int" name="slotCash"/>
+            </packet>
+            <packet opcode="0x302f" name="RequestRemoveQuest">
+                <param type="int" name="questId"/>
+            </packet>
+            <packet opcode="0x3030" name="QuestRewardChoice">
+                <param type="int" name="questId"/>
+                <param type="int" name="choice"/>
             </packet>
             <packet opcode="0x3032" name="RequestMergeItems">
                 <param type="int" name="slotFrom"/>
@@ -157,6 +168,10 @@
                 <loop count="40">
                     <param type="ushort" name="itemId"/>
                 </loop>
+            </packet>
+            <packet opcode="0x1007" name="UpdateSkills">
+                <param type="bytes" size="120" name="skills"/>
+                <param type="short" name="unkShort"/>
             </packet>
             <packet opcode="0x1008" name="UpdateExperience">
                 <param type="ushort" name="level"/>
@@ -597,8 +612,26 @@
                 <param type="int" name="unk"/>
                 <param type="int" name="unk"/>
             </packet>
+            <packet opcode="0x302f" name="QuestRemove">
+                <param type="int" name="questId"/>
+            </packet>
+            <packet opcode="0x3030" name="SendQuestRewardChoice">
+                <param type="int" name="questId"/>
+                <param type="int" name="choice"/>
+            </packet>
             <packet opcode="0x3031" name="SendQuestInfo">
                 <param type="ushort" name="questId"/>
+                <param type="bytes" size="5" name="requireType"/>
+                <param type="bytes" size="5" name="alreadyDone"/>
+                <param type="bytes" size="5" name="quantityNeed"/>
+                <param type="byte" name="empty"/>
+                <param type="short" name="neededId"/>
+                <param type="short" name="neededId"/>
+                <param type="short" name="neededId"/>
+                <param type="short" name="neededId"/>
+                <param type="short" name="neededId"/>
+                <param type="bool" name="isCompleted"/>
+                <param type="bool" name="isOld"/>
             </packet>
             <packet opcode="0x303D" name="Unk303D">
                 <param type="int" name="unk"/>
@@ -706,7 +739,7 @@
                 <param type="short" name="time4"/>
                 <param type="short" name="time5"/>
                 <param type="int" name="unk"/>
-                <param type="int" name="unk"/>                
+                <param type="int" name="unk"/>
             </packet>
             <packet opcode="0x3c7c" name="Unk3C7C">
             </packet>

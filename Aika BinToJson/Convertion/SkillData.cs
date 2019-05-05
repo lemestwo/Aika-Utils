@@ -19,23 +19,24 @@ namespace Aika_BinToJson.Convertion
                 while (stream.BaseStream.Position < size - 4)
                 {
                     var temp = new SkillDataJson();
-                    temp.LoopId = i;
+                    temp.Id = i;
                     temp.IconId = stream.ReadUInt32();
-                    temp.LevelRequired = stream.ReadUInt32();
-                    temp.LevelCap = stream.ReadUInt32();
+                    temp.RequiredLevel = stream.ReadUInt32();
+                    temp.MaxLevel = stream.ReadUInt32();
                     temp.Level = stream.ReadUInt32();
+                    temp.Tier = (uint) (i > 6060 ? 0 : (temp.Id - 1) / (16 * 6) % 10);
+                    temp.TierPos = (ushort) (i > 6060 ? 0 : (temp.Id - 1) / 16 % 6);
                     temp.Unk = stream.ReadInt32();
                     temp.Name = Encode.GetString(stream.ReadBytes(64)).Trim('\u0000');
                     temp.Name2 = Encode.GetString(stream.ReadBytes(64)).Trim('\u0000');
-                    temp.SkillPoints = stream.ReadUInt32();
+                    temp.LearnSkillPoint = stream.ReadUInt32();
                     temp.LearnPrice = stream.ReadUInt32();
-                    temp.SkillProfession = stream.ReadUInt32();
+                    temp.Profession = stream.ReadUInt32();
                     temp.GuildSkill = stream.ReadUInt32();
                     temp.Unk2 = stream.ReadUInt32();
-
                     temp.Unk3 = stream.ReadInt32();
                     temp.Mp = stream.ReadUInt32();
-                    temp.Faction = stream.ReadUInt32();
+                    temp.Facion = stream.ReadUInt32();
                     temp.Unk4 = stream.ReadInt32();
                     temp.Cooldown = stream.ReadUInt32();
                     temp.Unk5 = stream.ReadInt32();
