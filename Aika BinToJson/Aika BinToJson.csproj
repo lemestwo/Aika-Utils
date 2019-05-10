@@ -64,6 +64,7 @@
     <Compile Include="Convertion\SetItem.cs" />
     <Compile Include="Convertion\SkillData.cs" />
     <Compile Include="Convertion\SPosition.cs" />
+    <Compile Include="Convertion\StatusPoint.cs" />
     <Compile Include="Convertion\Title.cs" />
     <Compile Include="Models\ItemsJson.cs" />
     <Compile Include="Models\MakeItemsJson.cs" />

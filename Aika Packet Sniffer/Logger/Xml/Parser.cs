@@ -140,7 +140,7 @@ namespace Aika_Packet_Sniffer.Logger.Xml
             PacketParseListView param;
             var intSize = int.Parse(size);
             using (var ms = new MemoryStream(_data))
-            using (var stream = new BinaryReader(ms))
+            using (var stream = new BinaryReader(ms, Encoding.GetEncoding("iso-8859-1")))
             {
                 if (stream.BaseStream.Length < _pos) return null;
 
@@ -196,7 +196,7 @@ namespace Aika_Packet_Sniffer.Logger.Xml
                         for (var i = 0; i < tmpByte.Length; i++)
                             if (tmpByte[i].Equals(0xCC))
                                 tmpByte[i] = 0x00;
-                        value = Encoding.UTF8.GetString(tmpByte).Trim('\u0000');
+                        value = Encoding.GetEncoding("iso-8859-1").GetString(tmpByte).Trim('\u0000');
                         break;
                     default:
                         value = "";

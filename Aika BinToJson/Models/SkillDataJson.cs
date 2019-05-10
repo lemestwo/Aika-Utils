@@ -3,6 +3,7 @@ namespace Aika_BinToJson.Models
     public class SkillDataJson
     {
         public ushort Id { get; set; }
+        public ushort Idx { get; set; }
         public uint IconId { get; set; }
         public uint RequiredLevel { get; set; }
         public uint MaxLevel { get; set; }

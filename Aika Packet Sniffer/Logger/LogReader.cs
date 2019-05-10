@@ -122,7 +122,7 @@ namespace Aika_Packet_Sniffer.Logger
                         return null;
                     }
 
-                    var time = stream.ReadInt32();
+                    var time = stream.ReadUInt32();
                     var template = new PacketListView
                     {
                         Lenght = size,

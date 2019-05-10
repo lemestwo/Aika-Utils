@@ -20,6 +20,8 @@ namespace Aika_BinToJson.Convertion
                 {
                     var temp = new SkillDataJson();
                     temp.Id = i;
+                    temp.Idx = (ushort)Math.DivRem(i, 16, out var rem);
+                    if (rem == 0) temp.Idx--;
                     temp.IconId = stream.ReadUInt32();
                     temp.RequiredLevel = stream.ReadUInt32();
                     temp.MaxLevel = stream.ReadUInt32();

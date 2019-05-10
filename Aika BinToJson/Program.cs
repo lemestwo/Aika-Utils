@@ -105,6 +105,9 @@ namespace Aika_BinToJson
                     case "Dialog":
                         convert = new Dialog();
                         break;
+                    case "StatusPoint":
+                        convert = new StatusPoint();
+                        break;
                 }
 
                 if (convert != null)
