@@ -28,9 +28,7 @@ namespace Aika_BinToJson.Convertion
                     temp.ItemType = stream.ReadUInt16();
                     temp.CaeliumId = stream.ReadUInt32();
                     temp.SubType = stream.ReadInt32();
-                    temp.GearCoreLevel = stream.ReadUInt16();
-                    temp.Unk4 = stream.ReadByte(); // gold related
-                    temp.Unk5 = stream.ReadByte(); // gold related
+                    temp.GearCoreLevel = stream.ReadUInt32();
                     temp.Unk6 = stream.ReadUInt32(); // buff related
                     temp.Unk7 = stream.ReadUInt32(); // buff related
                     temp.Unk8 = stream.ReadUInt32(); // buff related

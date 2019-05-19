@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Windows.Media;
 using Aika_BinToJson.Models;
 using Newtonsoft.Json;
@@ -15,6 +16,7 @@ namespace Aika_BinToJson.Convertion
                 ushort i = 0;
 
                 var list = new List<TitleJson>();
+                var txt = new StringBuilder();
                 while (stream.BaseStream.Position < 57334)
                 {
                     var temp = new TitleJson();
@@ -37,12 +39,16 @@ namespace Aika_BinToJson.Convertion
                     var a = stream.ReadByte();
                     temp.Rgba = Color.FromArgb(a, r, g, b);
                     i++;
-                    if (temp.UnkId != 0)
-                    {
-                        list.Add(temp);
-                    }
+
+                    if (temp.UnkId == 0) continue;
+                    list.Add(temp);
+                    txt.AppendLine($"INSERT INTO `data_titles` VALUES (" +
+                                   $"{temp.LoopId}, {temp.Id}, {temp.UnkId}, {temp.MobsKilled}, " +
+                                   $"{temp.Effect1}, {temp.Effect2}, {temp.Effect3}, {temp.Effect1Value}, {temp.Effect2Value}, {temp.Effect3Value}, " +
+                                   $"'{temp.Desc.Trim()}', {temp.Unk}, '{temp.Rgba}');");
                 }
 
+                SqlData = txt.ToString();
                 JsonData = JsonConvert.SerializeObject(list, Formatting.Indented);
             }
         }

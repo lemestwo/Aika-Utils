@@ -5,7 +5,8 @@ namespace Aika_BinToJson.Models
 		public ushort LoopId { get; set; }
 		public string Name { get; set; }
 		public string Name2 { get; set; }
-		public uint Quantity { get; set; }
+		public ushort Quantity { get; set; }
+		public ushort Unk1 { get; set; }
 		public ushort[] ItemsId { get; set; }
 		public ushort[] EffectNumber { get; set; }
 		public ushort[] Unk { get; set; }

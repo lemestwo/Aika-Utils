@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using Newtonsoft.Json;
 
 namespace Aika_BinToJson.Convertion
@@ -14,6 +15,7 @@ namespace Aika_BinToJson.Convertion
                 byte i = 0;
 
                 var list = new List<SPositionJson>();
+                var txt = new StringBuilder();
                 while (stream.BaseStream.Position < size)
                 {
                     var temp = new SPositionJson()
@@ -32,10 +34,16 @@ namespace Aika_BinToJson.Convertion
                     };
 
                     i++;
-                    if (!string.IsNullOrEmpty(temp.MapName))
-                        list.Add(temp);
+                    if (string.IsNullOrEmpty(temp.MapName)) continue;
+
+                    list.Add(temp);
+                    var newMapName = temp.MapName.Replace("'", "''");
+                    var newRegionName = temp.RegionName.Replace("'", "''");
+                    txt.AppendLine($"INSERT INTO `data_map_regions` VALUES ({temp.LoopId + 1}, {temp.Coord[0]}, {temp.Coord[1]}, {temp.Map}, " +
+                                   $"{temp.Location}, {temp.TpLevel}, {temp.Unk1}, '{newMapName}', '{newRegionName}');");
                 }
 
+                SqlData = txt.ToString();
                 JsonData = JsonConvert.SerializeObject(list, Formatting.Indented);
             }
         }

@@ -17,8 +17,8 @@ namespace Aika_BinToJson
             }
 
             var inFile = args[0];
-            //var inFile = "C:\\Projetos\\Aika Utils\\Aika BinToJson\\bin\\Debug\\SkillData.bin";
             var outFile = inFile + ".json";
+            var outFile2 = inFile + ".txt";
 
             if (!File.Exists(inFile))
             {
@@ -112,7 +112,7 @@ namespace Aika_BinToJson
 
                 if (convert != null)
                 {
-                    convert.SetupFile(inFile, outFile);
+                    convert.SetupFile(inFile, outFile, outFile2);
                     convert.Convert();
                     convert.Save();
                     isDone = true;
@@ -130,6 +130,7 @@ namespace Aika_BinToJson
                 {
                     Console.WriteLine("Input: " + Path.GetFileName(inFile));
                     Console.WriteLine("Output: " + Path.GetFileName(outFile));
+                    Console.WriteLine("OutputSql: " + Path.GetFileName(outFile2));
                     Console.WriteLine("Converted with success.");
                 }
                 else

@@ -112,6 +112,9 @@
                 <param type="int" name="unk"/>
                 <param type="string" size="16" name="name"/>
             </packet>
+            <packet opcode="0x309d" name="RequestTokenResult">
+                <param type="int" name="result"/>
+            </packet>
             <packet opcode="0x30bf" name="MoveUnit">
                 <param type="float" name="coordX"/>
                 <param type="float" name="coordY"/>
@@ -121,6 +124,7 @@
                 <param type="byte" name="moveSpeed"/>
                 <param type="int" name="unkInt"/>
             </packet>
+            <packet opcode="0x30c0" name="InGameState"/>
             <packet opcode="0x30c0" name="RequestUseSkill">
                 <param type="int" name="targetId"/>
                 <param type="int" name="unk"/>
@@ -132,6 +136,9 @@
                 <param type="float" name="coordY"/>
                 <param type="float" name="tCoordX"/>
                 <param type="float" name="tCoordY"/>
+            </packet>
+            <packet opcode="0x3852" name="RequestNationReliques">
+                <param type="uint" name="nationId"/>
             </packet>
             <packet opcode="0x3c02" name="RequestToken">
                 <param type="ushort" name="charSlot"/>
@@ -572,7 +579,10 @@
                 <param type="ushort" name="unk"/>
                 <param type="ulong" name="charExp"/>
                 <param type="ushort" name="charLevel"/>
-                <param type="bytes" size="154" name="unkBytes"/>
+                <param type="ushort" name="guildLogo?"/>
+                <param type="bytes" size="30" name="unkBytes"/>
+                <param type="bytes" size="40" name="buffId (ushort)"/>
+                <param type="bytes" size="80" name="buffTime (uint)"/>
                 <param type="bytes" size="320" name="equips"/>
                 <param type="int" name="unkInt"/>
                 <param type="bytes" size="1680" name="inventory"/>
@@ -585,7 +595,15 @@
                 <param type="ushort" name="coordY"/>
                 <param type="short" name="rotation"/>
 
-                <param type="bytes" size="130" name=""/>
+                <param type="bytes" size="92" name=""/>
+                <param type="ushort" name="charFace"/>
+                <param type="ushort" name="charHelmet"/>
+                <param type="ushort" name="charArmor"/>
+                <param type="ushort" name="charGloves"/>
+                <param type="ushort" name="charPants"/>
+                <param type="ushort" name="charWeapon"/>
+                <param type="ushort" name="charShield"/>
+                <param type="bytes" size="24" name="refinements?"/>
                 <param type="timei" name="creationTime"/>
                 <param type="bytes" size="436" name=""/>
 
@@ -642,6 +660,25 @@
             </packet>
             <packet opcode="0x184c" name="DungeonTimer?">
             </packet>
+            <packet opcode="0x1853" name="UpdateNationReliques">
+                <param type="uint" name="nationId"/>
+                <loop count="25">
+                    <param type="ushort" name="itemId"/>
+                    <param type="ushort" name="itemId"/>
+                    <param type="uint" name="gearCore"/>
+                    <param type="timei" name="time"/>
+                    <param type="short" name="unk"/>
+                    <param type="byte" name="unk-2"/>
+                    <param type="byte" name="unk-1"/>
+                    <param type="int" name="unk"/>
+                </loop>
+                <loop count="25">
+                    <param type="uint" name="itemId"/>
+                    <param type="string" size="16" name="name"/>
+                    <param type="timei" name="time"/>
+                    <param type="uint" name="isOpen"/>
+                </loop>
+            </packet>
             <packet opcode="0x1865" name="SendGuildInfo">
                 <param type="ushort" name="guildLogo"/>
                 <param type="byte" name="empty"/>
@@ -679,10 +716,31 @@
                 <param type="short" name="empty"/>
                 <param type="bytes" size="44" name="unkBytes"/>
             </packet>
+            <packet opcode="0x1869" name="SendGuildMemberOn">
+                <param type="uint" name="dbId"/>
+                <param type="uint" name="status?"/>
+            </packet>
+            <packet opcode="0x186a" name="SendGuildMemberOff">
+                <param type="uint" name="dbId"/>
+                <param type="timei" name="time"/>
+            </packet>
+            <packet opcode="0x186f" name="SendFriendOn">
+                <param type="uint" name="dbId"/>
+                <param type="ushort" name="conId"/>
+                <param type="byte" name="status"/>
+                <param type="byte" name="unk"/>
+                <param type="byte" name="map"/>
+                <param type="byte" name="level"/>
+                <param type="byte" name="nationId"/>
+                <param type="byte" name="profession"/>
+            </packet>
+            <packet opcode="0x1871" name="SendFriendOff">
+                <param type="uint" name="dbId"/>
+            </packet>
             <packet opcode="0x187c" name="SendInviteToGuild">
                 <param type="string" size="16" name="inviterName"/>
             </packet>
-            <packet opcode="0x187f" name="SendGuildMembers">                
+            <packet opcode="0x187f" name="SendGuildMembers">
                 <loop count="10">
                     <param type="int" name="unk"/>
                     <param type="string" size="16" name="name"/>
@@ -804,8 +862,8 @@
                 <param type="ushort" name="pranConId"/>
                 <param type="ushort" name="unkShort"/>
                 <param type="ushort" name="unkShort"/>
-                <param type="bytes" size="120" name="buffs"/>
-                <param type="bytes" size="240" name="unk"/>
+                <param type="bytes" size="120" name="buffId"/>
+                <param type="bytes" size="240" name="buffTime"/>
                 <param type="string" size="32" name="title"/>
 
                 <param type="int" name="unk"/>

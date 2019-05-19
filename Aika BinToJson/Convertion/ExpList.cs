@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using Newtonsoft.Json;
 
 namespace Aika_BinToJson.Convertion
@@ -14,6 +15,7 @@ namespace Aika_BinToJson.Convertion
                 byte i = 0;
 
                 var list = new List<ExpListJson>();
+                var txt = new StringBuilder();
                 while (stream.BaseStream.Position < size - 4)
                 {
                     var temp = new ExpListJson
@@ -24,8 +26,10 @@ namespace Aika_BinToJson.Convertion
 
                     i++;
                     list.Add(temp);
+                    txt.AppendLine($"INSERT INTO `data_exp` VALUES ({temp.Level}, {temp.Experience});");
                 }
 
+                SqlData = txt.ToString();
                 JsonData = JsonConvert.SerializeObject(list, Formatting.Indented);
             }
         }

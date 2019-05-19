@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using Aika_BinToJson.Models;
 using Newtonsoft.Json;
 
@@ -16,6 +17,7 @@ namespace Aika_BinToJson.Convertion
                 var size = stream.BaseStream.Length;
 
                 var list = new List<MapJson>();
+                var txt = new StringBuilder();
                 while (stream.BaseStream.Position < size)
                 {
                     var temp = new MapJson[64];
@@ -57,6 +59,15 @@ namespace Aika_BinToJson.Convertion
                     list.AddRange(temp.Where(mapJson => !string.IsNullOrEmpty(mapJson.Name)));
                 }
 
+                foreach (var map in list)
+                {
+                    var newName = map.Name.Replace("'", "''").Trim();
+                    txt.AppendLine($"INSERT INTO `data_maps` VALUES ({map.LoopId + 1}, '{newName}', " +
+                                   $"{map.Coord.X1}, {map.Coord.Y1}, {map.Coord.X2}, {map.Coord.Y2}, " +
+                                   $"{map.Unk1}, {map.Unk2}, {map.Unk3}, {map.Unk4});");
+                }
+
+                SqlData = txt.ToString();
                 JsonData = JsonConvert.SerializeObject(list, Formatting.Indented);
             }
         }

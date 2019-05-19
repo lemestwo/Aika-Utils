@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using Aika_BinToJson.Models;
 using Newtonsoft.Json;
 
@@ -15,6 +16,7 @@ namespace Aika_BinToJson.Convertion
                 ushort i = 0;
 
                 var list = new List<RecipeJson>();
+                var txt = new StringBuilder();
                 while (stream.BaseStream.Position < size)
                 {
                     var temp = new RecipeJson
@@ -41,10 +43,19 @@ namespace Aika_BinToJson.Convertion
 
                     i++;
 
-                    if (temp.ItemId != 0)
-                        list.Add(temp);
+                    if (temp.ItemId == 0) continue;
+                    list.Add(temp);
+                    txt.AppendLine($"INSERT INTO `data_recipes` VALUES ({i}, {temp.ItemId}, {temp.TargetItemId}, {temp.TargetItemIdSup}, {temp.Price}, " +
+                                   $"{temp.Quantity}, {temp.MinLevel}, {temp.Chance}, {temp.SuperiorChance}, {temp.DoubleChance});");
+                    for (var j = 0; j < 12; j++)
+                    {
+                        if (temp.IngredientsItemId[j] > 0)
+                            txt.AppendLine(
+                                $"INSERT INTO `data_recipe_ingredients` VALUES ({temp.ItemId}, {temp.IngredientsItemId[j]}, {temp.IngredientsQuantity[j]});");
+                    }
                 }
 
+                SqlData = txt.ToString();
                 JsonData = JsonConvert.SerializeObject(list, Formatting.Indented);
             }
         }

@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
 using Aika_BinToJson.Models;
 using Newtonsoft.Json;
 
@@ -15,6 +17,7 @@ namespace Aika_BinToJson.Convertion
                 ushort i = 0;
 
                 var list = new List<MakeItemsJson>();
+                var txt = new StringBuilder();
                 while (stream.BaseStream.Position < size)
                 {
                     var temp = new MakeItemsJson()
@@ -39,10 +42,20 @@ namespace Aika_BinToJson.Convertion
 
                     i++;
 
-                    if (temp.TargetItemId != 0)
-                        list.Add(temp);
+                    if (temp.TargetItemId == 0) continue;
+
+                    list.Add(temp);
+                    txt.AppendLine($"INSERT INTO `data_make_items` VALUES ({temp.LoopId}, {temp.TargetItemId}, {temp.Price}, {temp.Quantity}, " +
+                                   $"{temp.Rate}, {temp.SuperiorRate}, {temp.DoubleRate});");
+                    for (var j = 0; j < 12; j++)
+                    {
+                        if (temp.IngredientsItemId[j] > 0)
+                            txt.AppendLine(
+                                $"INSERT INTO `data_make_item_ingredients` VALUES ({temp.LoopId}, {temp.IngredientsItemId[j]}, {temp.IngredientsQuantity[j]});");
+                    }
                 }
 
+                SqlData = txt.ToString();
                 JsonData = JsonConvert.SerializeObject(list, Formatting.Indented);
             }
         }

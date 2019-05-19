@@ -30,9 +30,7 @@ namespace Aika_BinToJson.Models
         public ushort Effect3Value { get; set; }
         public ushort MaxLevel { get; set; }
         public int SubType { get; set; }
-        public ushort GearCoreLevel { get; set; }
-        public byte Unk4 { get; set; }
-        public byte Unk5 { get; set; }
+        public uint GearCoreLevel { get; set; }
         public uint Unk6 { get; set; }
         public uint Unk7 { get; set; }
         public uint Unk8 { get; set; }

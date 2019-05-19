@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
 using Newtonsoft.Json;
 
 namespace Aika_BinToJson.Convertion
@@ -14,24 +16,35 @@ namespace Aika_BinToJson.Convertion
                 byte i = 0;
 
                 var list = new List<RecipeRateJson>();
+                var txt = new StringBuilder();
                 while (stream.BaseStream.Position < size)
                 {
-                    var temp = new RecipeRateJson()
+                    var temp = new RecipeRateJson
                     {
                         LoopId = i,
                         RecipeId = stream.ReadUInt32(),
                         IngredientId = stream.ReadUInt32(),
-                        IncreasedChance = stream.ReadInt32(),
+                        IncreasedChance = stream.ReadInt32() == 1,
+                        Chance = new ushort[16],
                     };
-                    temp.Chance = new ushort[16];
                     for (var j = 0; j < 16; j++)
                         temp.Chance[j] = stream.ReadUInt16();
 
                     i++;
-                    if (temp.RecipeId != 0)
-                        list.Add(temp);
+                    if (temp.RecipeId == 0) continue;
+
+                    list.Add(temp);
+                    var queryStart = $"INSERT INTO `data_recipe_rates` VALUES ({temp.RecipeId}, {temp.IngredientId}, {temp.IncreasedChance}, ";
+                    var rates = new StringBuilder();
+                    for (var j = 0; j < 16; j++)
+                        rates.AppendFormat("{0}, ", temp.Chance[j]);
+
+                    var queryMiddle = rates.ToString().Trim(' ', ',');
+                    var queryEnd = ");";
+                    txt.AppendLine(string.Concat(queryStart, queryMiddle, queryEnd));
                 }
 
+                SqlData = txt.ToString();
                 JsonData = JsonConvert.SerializeObject(list, Formatting.Indented);
             }
         }
@@ -42,7 +55,7 @@ namespace Aika_BinToJson.Convertion
         public ushort LoopId { get; set; }
         public uint RecipeId { get; set; }
         public uint IngredientId { get; set; }
-        public int IncreasedChance { get; set; }
+        public bool IncreasedChance { get; set; }
         public ushort[] Chance { get; set; }
     }
 }
