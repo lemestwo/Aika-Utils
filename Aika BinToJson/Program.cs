@@ -61,6 +61,9 @@ namespace Aika_BinToJson
                     case "GearCore":
                         convert = new GearCore();
                         break;
+                    case "ConvertCore":
+                        convert = new ConvertCore();
+                        break;
                     case "Title":
                         convert = new Title();
                         break;
