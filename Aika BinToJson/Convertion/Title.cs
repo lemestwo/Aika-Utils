@@ -43,7 +43,7 @@ namespace Aika_BinToJson.Convertion
                     if (temp.UnkId == 0) continue;
                     list.Add(temp);
                     txt.AppendLine($"INSERT INTO `data_titles` VALUES (" +
-                                   $"{temp.LoopId / 4},{temp.LoopId % 4} ,{temp.Id}, {temp.UnkId}, {temp.MobsKilled}, " +
+                                   $"{temp.LoopId}, {temp.LoopId / 4},{temp.LoopId % 4} ,{temp.Id}, {temp.UnkId}, {temp.MobsKilled}, " +
                                    $"{temp.Effect1}, {temp.Effect2}, {temp.Effect3}, {temp.Effect1Value}, {temp.Effect2Value}, {temp.Effect3Value}, " +
                                    $"'{temp.Desc.Trim()}', {temp.Unk}, '{temp.Rgba}');");
                 }
