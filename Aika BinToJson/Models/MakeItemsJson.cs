@@ -2,7 +2,7 @@ namespace Aika_BinToJson.Models
 {
 	public class MakeItemsJson
 	{
-		public ushort LoopId { get; set; }
+		public ushort ItemId { get; set; }
 		public uint TargetItemId { get; set; }
 		public uint Price { get; set; }
 		public byte Quantity { get; set; }

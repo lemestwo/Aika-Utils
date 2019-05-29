@@ -22,7 +22,7 @@ namespace Aika_BinToJson.Convertion
                 {
                     var temp = new MakeItemsJson()
                     {
-                        LoopId = i,
+                        ItemId = i,
                         TargetItemId = stream.ReadUInt32(),
                         Price = stream.ReadUInt32(),
                         Quantity = stream.ReadByte(),
@@ -45,13 +45,13 @@ namespace Aika_BinToJson.Convertion
                     if (temp.TargetItemId == 0) continue;
 
                     list.Add(temp);
-                    txt.AppendLine($"INSERT INTO `data_make_items` VALUES ({temp.LoopId}, {temp.TargetItemId}, {temp.Price}, {temp.Quantity}, " +
-                                   $"{temp.Rate}, {temp.SuperiorRate}, {temp.DoubleRate});");
+                    txt.AppendLine($"INSERT INTO `data_make_items` VALUES ({temp.ItemId}, {temp.TargetItemId}, {temp.Level}, {temp.Price}, " +
+                                   $"{temp.Quantity}, {temp.Rate}, {temp.SuperiorRate}, {temp.DoubleRate});");
                     for (var j = 0; j < 12; j++)
                     {
                         if (temp.IngredientsItemId[j] > 0)
                             txt.AppendLine(
-                                $"INSERT INTO `data_make_item_ingredients` VALUES ({temp.LoopId}, {temp.IngredientsItemId[j]}, {temp.IngredientsQuantity[j]});");
+                                $"INSERT INTO `data_make_item_ingredients` VALUES ({temp.ItemId}, {temp.IngredientsItemId[j]}, {temp.IngredientsQuantity[j]});");
                     }
                 }
 

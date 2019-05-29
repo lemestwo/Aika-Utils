@@ -196,8 +196,7 @@
                 <param type="byte" name="map"/>
                 <param type="byte" name="level"/>
                 <param type="byte" name="nation?"/>
-            </packet>
-            <packet opcode="0x1086" name="UnkInitial1"/>
+            </packet>            
             <packet opcode="0x1031" name="UnkInitial3"/>
             <packet opcode="0x30A5" name="UnkInitial4"/>
             <packet opcode="0x30A6" name="UnkInitial2"/>
@@ -358,6 +357,13 @@
                 <param type="int" name="guildId?"/>
                 <param type="string" size="20" name="guildName"/>
             </packet>
+            <packet opcode="0x1036" name="UpdateReliques">
+                <loop count="24">
+                    <param type="ushort" name="itemId"/>
+                </loop>
+                <param type="ushort" name="unk"/>
+                <param type="ushort" name="unk"/>
+            </packet>
             <packet opcode="0x1037" name="UpdateBank">
                 <param type="int" name="unkInt"/>
                 <param type="ulong" name="goldBank"/>
@@ -395,12 +401,7 @@
                 <param type="int" name="acquiredTitleId"/>
                 <param type="int" name="updatedTitleId"/>
             </packet>
-            <packet opcode="0x1036" name="UpdateReliques">
-                <loop count="24">
-                    <param type="ushort" name="itemId"/>
-                </loop>
-                <param type="ushort" name="unk"/>
-                <param type="ushort" name="unk"/>
+            <packet opcode="0x1086" name="SendCharacterTitles">                
             </packet>
             <packet opcode="0x1801" name="SendCharacterList">
                 <param type="int" name="accId"/>
