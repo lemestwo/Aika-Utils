@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using Aika_BinToJson.Convertion;
-using Aika_BinToJson.Models;
 
 namespace Aika_BinToJson
 {
@@ -79,6 +78,7 @@ namespace Aika_BinToJson
                     case "ReinforceA":
                     case "ReinforceW":
                         convert = new ReinforceA();
+                        ((ReinforceA) convert).IsReinforceW = fileName == "ReinforceW";
                         break;
                     case "Reinforce2":
                     case "Reinforce3":

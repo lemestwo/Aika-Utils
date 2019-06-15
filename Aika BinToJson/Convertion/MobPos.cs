@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Aika_BinToJson.Models;
 using Newtonsoft.Json;
 

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Aika_Packet_Sniffer.Model;
-using Microsoft.Win32;
 
 namespace Aika_Packet_Sniffer.Logger
 {

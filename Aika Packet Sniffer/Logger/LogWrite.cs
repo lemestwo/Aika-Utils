@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.Sockets;
 using Aika_Packet_Sniffer.Model;
 
 namespace Aika_Packet_Sniffer.Logger

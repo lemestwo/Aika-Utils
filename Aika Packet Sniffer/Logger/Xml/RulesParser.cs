@@ -1,9 +1,5 @@
-using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Windows.Documents;
 using System.Xml;
-using Aika_Packet_Sniffer.Model;
 
 namespace Aika_Packet_Sniffer.Logger.Xml
 {

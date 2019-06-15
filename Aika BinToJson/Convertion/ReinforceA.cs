@@ -1,11 +1,14 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using Newtonsoft.Json;
 
 namespace Aika_BinToJson.Convertion
 {
     public class ReinforceA : BaseConvert
     {
+        public bool IsReinforceW = false;
+
         public override void Convert()
         {
             using (var stream = new BinaryReader(File.OpenRead(Path), Encode))
@@ -14,6 +17,7 @@ namespace Aika_BinToJson.Convertion
                 ushort i = 0;
 
                 var list = new List<ReinforceAJson>();
+                var txt = new StringBuilder();
                 while (stream.BaseStream.Position < size - 4)
                 {
                     var temp = new ReinforceAJson
@@ -29,10 +33,14 @@ namespace Aika_BinToJson.Convertion
 
                     i++;
 
-                    if (temp.Price != 999999)
-                        list.Add(temp);
+                    if (temp.Price == 999999) continue;
+
+                    list.Add(temp);
+                    txt.AppendLine(
+                        $"INSERT INTO `data_reinforce_{(IsReinforceW ? "w" : "a")}` VALUES ({temp.LoopId + 1}, {temp.Price}, {temp.Unk}, {string.Join(", ", temp.Chance)}); ");
                 }
 
+                SqlData = txt.ToString();
                 JsonData = JsonConvert.SerializeObject(list, Formatting.Indented);
             }
         }

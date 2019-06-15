@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using System.Windows;
 using Aika_Packet_Sniffer.Logger;
 using Aika_Packet_Sniffer.Model;
 

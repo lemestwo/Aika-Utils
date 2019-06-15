@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
-using System.Text;
-using Newtonsoft.Json;
 
 namespace Aika_Bin_Decrypt
 {
